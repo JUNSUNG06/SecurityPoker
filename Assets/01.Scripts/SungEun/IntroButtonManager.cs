@@ -10,6 +10,12 @@ public class IntroButtonManager : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
-
-    //다트윈, 에셋, 화면 비율, 뭐 더 전체적인 디테일한 부분? 도튼데 도트 아닌 스프라이트 넣어도...?
+    public void Exit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }
