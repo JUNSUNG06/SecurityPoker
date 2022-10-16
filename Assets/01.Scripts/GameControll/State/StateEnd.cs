@@ -23,4 +23,9 @@ public class StateEnd : State<GameController>
     {
         throw new System.NotImplementedException();
     }
+
+    public override void OnTextMove()
+    {
+        throw new System.NotImplementedException();
+    }
 }

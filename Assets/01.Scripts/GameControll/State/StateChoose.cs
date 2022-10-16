@@ -1,18 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
+using DG.Tweening;
+using TMPro;
 
 public class StateChoose : State<GameController>
 {
+    private TextMeshProUGUI StateText;
+    private GameObject GoButton;
+    private GameObject DieButton;
+    private OnButtonClick onButtonClick;
+
     private bool PlayerChoose = false;
     private bool AIChoose = false;
+    private bool TextMove = false;
 
     public override void OnAwake()
     {
+        StateText = stateMachineClass.StateText;
+        GoButton = stateMachineClass.GoButton;
+        DieButton = stateMachineClass.DieButton;
+        onButtonClick = stateMachineClass.onButtonClick;
         Debug.Log(3);
-
-        //선택시작......
-
     }
 
     public override void OnStart()
@@ -20,40 +30,33 @@ public class StateChoose : State<GameController>
         Debug.Log("State Choose Start");
 
         //이때부터 선택 가능......
+        onButtonClick.Click = false;
+
+        StateText.text = "Choose";
+        OnTextMove();//택스트......
 
     }
 
     public override void OnUpdate(float deltaTime)
     {
-        PlayerChoose = true;
-
-        //버튼 가져와서 버튼 선택......
-
-        if (true /* 만약 플레이어가 GO버튼을 눌럿다면*/ && PlayerChoose == true)
+        if(onButtonClick.Click == true && PlayerChoose == false)
         {
-            PlayerPrefs.SetString("PlayerChoose", "GO");
-            PlayerChoose = false;
-            AIChoose = true;
-        }
-        else if(true /* 아니면 플레이어가 DIE버튼을 눌럿다면*/ && PlayerChoose == true)
-        {
-            PlayerPrefs.SetString("PlayerChoose", "DIE");
-            PlayerChoose = false;
-            AIChoose = true;
+            onButtonClick.Click = false;
+            PlayerChoose = true;
         }
 
-        if(true /* AI가 GO를 선택하는 조건/알고리즘*/ && AIChoose == true)
+        if(true /* AI가 GO를 선택하는 조건/알고리즘*/ && AIChoose == false)
         {
             PlayerPrefs.SetString("AIChoose", "GO");
-            AIChoose = false;
+            AIChoose = true;
         }
-        else if(true /* AI가 DIE를 선택하는 조건/알고리즘*/ && AIChoose == true)
+        else if(true /* AI가 DIE를 선택하는 조건/알고리즘*/ && AIChoose == false)
         {
             PlayerPrefs.SetString("AIChoose", "DIE");
-            AIChoose = false;
+            AIChoose = true;
         }
 
-        if(PlayerChoose == false && AIChoose == false)
+        if(PlayerChoose == true && AIChoose == true && TextMove == true)
         {
             stateMachine.ChangeState<StateCalculate>();
         }
@@ -62,8 +65,22 @@ public class StateChoose : State<GameController>
     public override void OnEnd()
     {
         Debug.Log("State Choose End");
-
+        
         //버튼 비활성화 등 결과준비 + 카드 걍 로테이션으로 뒤집기......
 
+    }
+
+    public override void OnTextMove()
+    {
+        StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(1, 0)), 1.5f).SetEase(Ease.OutExpo).OnComplete(() =>
+        {
+            StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
+            {
+                Debug.Log("조아");
+                TextMove = true;
+                GoButton.SetActive(true);
+                DieButton.SetActive(true);
+            });
+        });
     }
 }
