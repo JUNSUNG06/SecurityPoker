@@ -34,6 +34,11 @@ public class SoundDataManager : MonoBehaviour
         path = Application.persistentDataPath + "SoundData";
     }
 
+    private void Start()
+    {
+        Debug.Log(path);
+    }
+
     public void SaveData()
     {
         string data = JsonUtility.ToJson(sound);
