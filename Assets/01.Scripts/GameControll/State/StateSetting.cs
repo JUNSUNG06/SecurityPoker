@@ -35,8 +35,7 @@ public class StateSetting : State<GameController>
         //카드1장세팅......(플레이어 + AI 동시에)
 
 
-            
-        CardSeetting = true;
+        if (Input.GetButtonDown("Fire1")) { CardSeetting = true; }
 
         if(CardSeetting == true)
         {

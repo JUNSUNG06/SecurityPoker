@@ -35,8 +35,7 @@ public class StateStart : State<GameController>
     {
 
         //키드 받기(필요 없을 수도)......
-
-        CardDrawing = true;
+        if (Input.GetButtonDown("Fire1")) { CardDrawing = true; }
 
         if (CardDrawing == true && TextMove == true)//만약 카드를 받았다면
         {
