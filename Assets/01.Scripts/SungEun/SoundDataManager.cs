@@ -31,7 +31,9 @@ public class SoundDataManager : MonoBehaviour
         }
         #endregion
 
-        path = Application.persistentDataPath + "SoundData";
+        path = Application.persistentDataPath + "/SoundData";
+        Debug.Log(path);
+        SaveData();
     }
 
     public void SaveData()
