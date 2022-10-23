@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
-public class Card : MonoBehaviour, IPointerDownHandler
+public class Card : MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    private Vector2 originSize;
+
+    private bool selected = false;
+
+    [SerializeField] private float activeSize;
+    [SerializeField] private float chagneSizeDuration;
+
     [SerializeField] private int number;
 
     public int Number
@@ -15,30 +23,56 @@ public class Card : MonoBehaviour, IPointerDownHandler
         }
     }
 
+    private RectTransform rectTransform;
+
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+
+        originSize = new Vector2(rectTransform.localScale.x, rectTransform.localScale.y);
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(眉农构矫扁())
+        Debug.Log(1);
+
+        if (CardManager.Instance.SelectedCard == null)
         {
-            GameObject.Find("Manager").GetComponent<CardManager>().SelectedCard = this.GetComponent<RectTransform>();
+            if (!selected)
+            {
+                CardManager.Instance.SelectedCard = this.GetComponent<RectTransform>();
+                selected = true;
+            }
         }
     }
 
-    private bool 眉农构矫扁()
+    public void OnPointerMove(PointerEventData eventData)
     {
-        Vector2 minPos;
-        Vector2 maxPos;
-        RectTransform pos;
-
-        pos = GetComponent<RectTransform>();
-
-        minPos = new Vector2(pos.rect.x - pos.rect.width / 2, pos.rect.y - pos.rect.height / 2);
-        maxPos = new Vector2(pos.rect.x + pos.rect.width / 2, pos.rect.y + pos.rect.height / 2);
-
-        if((Input.mousePosition.x >= minPos.x && Input.mousePosition.y >= minPos.y) && (Input.mousePosition.x <= maxPos.x && Input.mousePosition.y <= maxPos.y))
+        if(selected)
         {
-            return true;
+            rectTransform.anchoredPosition += eventData.delta;
         }
+    }
 
-        return false;
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if (CardManager.Instance.SelectedCard != null)
+        {
+            if (selected)
+            {
+                CardManager.Instance.SelectedCard = null;
+                selected = false;
+            }
+        }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        CardManager.Instance.SetCardScale(rectTransform, originSize * activeSize, chagneSizeDuration);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        CardManager.Instance.SetCardScale(rectTransform, originSize, chagneSizeDuration);
     }
 }
