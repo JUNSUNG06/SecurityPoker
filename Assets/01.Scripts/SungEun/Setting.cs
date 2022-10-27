@@ -9,7 +9,23 @@ public class Setting : MonoBehaviour
     [SerializeField] GameObject settingCanvas;
     [SerializeField] GameObject settingWindow;
 
-    public void ClickSetting()
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (settingCanvas.activeSelf == true)
+            {
+                SettingExit();
+            }
+            else if (settingCanvas.activeSelf == false)
+            {
+                CheckSetting();
+            }
+        }
+
+    }
+
+    public void CheckSetting()
     {
         settingCanvas.SetActive(true);
         settingWindow.transform.DOScale(new Vector3(1, 1, 1), .5f).SetEase(Ease.OutBack);
