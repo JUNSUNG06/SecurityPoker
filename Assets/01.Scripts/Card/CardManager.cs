@@ -44,12 +44,17 @@ public class CardManager : MonoBehaviour
         cardCanvas = GameObject.Find("CardCanvas").GetComponent<Transform>();           
     }
 
-    public static void OpenCard()
+    public void OpenCard(RectTransform card)
     {
 
     }
 
     public void ShowCardInformation()
+    {
+
+    }
+
+    public void HideCardInformation()
     {
 
     }

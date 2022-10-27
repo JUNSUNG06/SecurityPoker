@@ -6,6 +6,14 @@ using DG.Tweening;
 
 public class Card : MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    private enum CardType
+    {
+        onHand,
+        onDrag,
+        set
+    }
+    private CardType currentType;
+
     private Vector2 originSize;
 
     private bool selected = false;
@@ -48,9 +56,12 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPo
 
     public void OnPointerMove(PointerEventData eventData)
     {
-        if(selected)
+        if(currentType == CardType.onDrag)
         {
-            rectTransform.anchoredPosition += eventData.delta;
+            if (selected)
+            {
+                rectTransform.anchoredPosition += eventData.delta;
+            }
         }
     }
 
@@ -68,11 +79,83 @@ public class Card : MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPo
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        CardManager.Instance.SetCardScale(rectTransform, originSize * activeSize, chagneSizeDuration);
+        OnPointerDownProcess();   
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        CardManager.Instance.SetCardScale(rectTransform, originSize, chagneSizeDuration);
+        OnPointerUpProcess();
+    }
+
+    private void OnClickDownProcess()
+    {
+        switch (currentType)
+        {
+            case CardType.onHand:
+                CardManager.Instance.SelectedCard = this.rectTransform;
+                currentType = CardType.onDrag;
+                selected = true;
+                break;
+            case CardType.onDrag:
+                //
+                break;
+            case CardType.set:
+                //
+                break;
+        }
+    }
+
+    private void OnClickUpProcess()
+    {
+        switch (currentType)
+        {
+            case CardType.onHand:
+                //패로 돌아가는거
+                break;
+            case CardType.onDrag:
+                CardManager.Instance.SelectedCard = null;
+                selected = false;
+                break;
+            case CardType.set:
+                CardManager.Instance.OpenCard(this.rectTransform);
+                break;
+        }
+    }
+
+    private void OnPointerDownProcess()
+    {
+        switch (currentType)
+        {
+            case CardType.onHand:
+                CardManager.Instance.SetCardScale(rectTransform, originSize * activeSize, chagneSizeDuration);
+                break;
+            case CardType.onDrag:
+                //
+                break;
+            case CardType.set:
+                CardManager.Instance.ShowCardInformation();
+                break;
+        }
+    }
+    
+    private void OnPointerUpProcess()
+    {
+        switch (currentType)
+        {
+            case CardType.onHand:
+                CardManager.Instance.SetCardScale(rectTransform, originSize, chagneSizeDuration);
+                break;
+            case CardType.onDrag:
+                //
+                break;
+            case CardType.set:
+                CardManager.Instance.HideCardInformation();
+                break;
+        }
+    }
+
+    private bool OnSetArea()
+    {
+        return false;
     }
 }
