@@ -16,7 +16,7 @@ public class RecordManager : MonoBehaviour
         }
     }
 
-    public List<Record> recordList = new List<Record>();
+    public List<Records> recordList = new List<Records>();
 
     private void Awake()
     {
@@ -26,7 +26,7 @@ public class RecordManager : MonoBehaviour
 
     public void CreateRecord(int _playerScore, int _aiScore, bool _isWin)
     {
-        Record record = new Record(_playerScore, _aiScore, _isWin);
+        Records record = new Records(_playerScore, _aiScore, _isWin);
         recordList.Add(record);
     }
 }

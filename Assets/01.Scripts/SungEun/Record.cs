@@ -1,0 +1,41 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using DG.Tweening;
+
+public class Record : MonoBehaviour
+{
+    [SerializeField] GameObject recordCanvas;  //셋팅관련 캔버스
+    [SerializeField] GameObject recordWindow;     //셋팅 창
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))   //리코드창이 켜져 있을 때 ESC키를 누르면 사라짐.
+        {
+            if (recordCanvas.activeSelf == true)
+            {
+                RecordExit();
+            }
+        }
+
+    }
+
+    public void RecordCheck()
+    {
+        GetComponent<Setting>().enabled = false;
+        recordCanvas.SetActive(true);      //셋팅 캔버스 활성화
+        recordWindow.transform.DOScale(new Vector3(1, 1, 1), .5f).SetEase(Ease.OutBack);   //셋팅창 나타나기
+    }
+
+    public void RecordExit()
+    {
+        recordWindow.transform.DOScale(new Vector3(0, 0, 0), .5f).SetEase(Ease.InBack);    //셋팅창 사라지기
+        Invoke("RealExit", .5f);    //셋팅 캔버스의 사라지는 시간은 0.5초 이후에 셋팅창이 사라지는 시간이 0.5초라서
+    }
+
+    void RealExit()
+    {
+        recordCanvas.SetActive(false);     //셋팅 캔버스 비활성화
+        GetComponent<Setting>().enabled = true;
+    }
+}

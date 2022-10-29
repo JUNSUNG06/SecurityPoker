@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Record
+public class Records
 {
     private int playerScore;
     private int aiScore;
@@ -12,7 +12,7 @@ public class Record
     public int AiScore => aiScore;
     public bool IsWin => isWin;
 
-    public Record(int _playerScore, int _aiScore, bool _isWin)
+    public Records(int _playerScore, int _aiScore, bool _isWin)
     {
         playerScore = _playerScore;
         aiScore = _aiScore;
