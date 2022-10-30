@@ -29,6 +29,9 @@ public class StateStart : State<GameController>
 
         //게임도입효과......
 
+
+        //카드 생성
+        CreateCard();
     }
 
     public override void OnUpdate(float deltaTime)
@@ -60,5 +63,25 @@ public class StateStart : State<GameController>
                 TextMove = true;
             });
         });
+    }
+
+    private void CreateCard()
+    {
+        for (int i = 0; i < 2; i++)
+        {
+            for (int j = 0; j < 5; j++)
+            {
+                if (i == 0)
+                {
+                    Vector2 pos = (CardManager.Instance.playerCardTrm.position + new Vector3(j, 0, 0));
+                    CardManager.Instance.CreateCard(true, j + 1, 5 - j, pos, j + 1);
+                }
+                else
+                {
+                    Vector2 pos = (CardManager.Instance.aiCardTrm.position + new Vector3(-j, 0, 0));
+                    CardManager.Instance.CreateCard(false, j + 1, 5 - j, pos, j + 1);
+                }
+            }
+        }
     }
 }
