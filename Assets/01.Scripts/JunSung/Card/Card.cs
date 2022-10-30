@@ -1,161 +1,108 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using TMPro;
 using DG.Tweening;
 
-public class Card : MonoBehaviour, IPointerDownHandler, IPointerMoveHandler, IPointerUpHandler, IPointerEnterHandler, IPointerExitHandler
+public class Card : MonoBehaviour
 {
-    private enum CardType
-    {
-        onHand,
-        onDrag,
-        set
-    }
-    private CardType currentType;
-
-    private Vector2 originSize;
-
-    private bool selected = false;
-
-    [SerializeField] private float activeSize;
-    [SerializeField] private float chagneSizeDuration;
-
     [SerializeField] private int number;
+    [SerializeField] private int amount;
+    [SerializeField] private bool isfront;
 
-    public int Number
-    {
-        get
-        {
-            return number;
-        }
-    }
+    public int Number { get => number; set => number = value; }
+    public int Amount { get => amount; set => amount = value; }
 
-    private RectTransform rectTransform;
+    [SerializeField] public TextMeshPro numberText;
+    [SerializeField] public TextMeshPro amountText;
+
+    private bool isPlayerCard = false;
+    public Vector2 originPos;
+
+    public Order order;
+    public bool isClone = false;
 
     private void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-
-        originSize = new Vector2(rectTransform.localScale.x, rectTransform.localScale.y);
+        numberText = transform.GetChild(0).GetComponent<TextMeshPro>();
+        amountText = transform.GetChild(1).GetComponent<TextMeshPro>();
+        order = GetComponent<Order>();
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    public void SetUp(bool _isPlayer, int _number, int _amount, int _order)
     {
-        Debug.Log(1);
+        isfront = _isPlayer;
+        isPlayerCard = _isPlayer;
+        number = _number;
+        amount = _amount;
+        originPos = transform.position;
+        order.SetOriginOrder(_order);
 
-        if (CardManager.Instance.SelectedCard == null)
+        if(isfront)
         {
-            if (!selected)
-            {
-                CardManager.Instance.SelectedCard = this.GetComponent<RectTransform>();
-                selected = true;
-            }
+            numberText.text = number.ToString();
+            amountText.text = "x" + amount.ToString();
+        }
+        else
+        {
+            numberText.text = "?";
+            amountText.text = "";
         }
     }
 
-    public void OnPointerMove(PointerEventData eventData)
+    public void Setting(GameObject _cardPrefab, Vector2 _areaPos)
     {
-        if(currentType == CardType.onDrag)
+        transform.position = originPos;
+        amount--;
+        amountText.text = amount.ToString();
+        CreateClone(_cardPrefab, _areaPos);
+    }
+
+    public void CreateClone(GameObject _cardPrefab, Vector2 _areaPos)
+    {
+        GameObject cloneCardObj = Instantiate(_cardPrefab, Vector2.zero, Quaternion.identity);
+        Card cloneCard = cloneCardObj.GetComponent<Card>();
+        cloneCard.transform.position = _areaPos;
+        cloneCard.Number = this.number;
+        cloneCard.Amount = 0;
+        cloneCard.numberText.text = cloneCard.Number.ToString();
+        cloneCard.amountText.text = "";
+        cloneCard.HideCard();
+        cloneCard.isClone = true;
+    }
+
+    public void OpenCard()
+    {
+        numberText.text = number.ToString();
+    }
+
+    public void HideCard()
+    {
+        numberText.text = "?";
+        amountText.text = "";
+    }
+
+    private void OnMouseDown()
+    {
+        if(isPlayerCard)
         {
-            if (selected)
-            {
-                rectTransform.anchoredPosition += eventData.delta;
-            }
+            CardManager.Instance.MouseDownEvent(this.transform);
+        }      
+    }
+
+    private void OnMouseDrag()
+    {
+        if(isPlayerCard)
+        {
+            CardManager.Instance.MouseDragEvent();
         }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    private void OnMouseUp()
     {
-        if (CardManager.Instance.SelectedCard != null)
+        if(isPlayerCard)
         {
-            if (selected)
-            {
-                CardManager.Instance.SelectedCard = null;
-                selected = false;
-            }
+            CardManager.Instance.MouseUpEvent();
         }
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        OnPointerDownProcess();   
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        OnPointerUpProcess();
-    }
-
-    private void OnClickDownProcess()
-    {
-        switch (currentType)
-        {
-            case CardType.onHand:
-                CardManager.Instance.SelectedCard = this.rectTransform;
-                currentType = CardType.onDrag;
-                selected = true;
-                break;
-            case CardType.onDrag:
-                //
-                break;
-            case CardType.set:
-                //
-                break;
-        }
-    }
-
-    private void OnClickUpProcess()
-    {
-        switch (currentType)
-        {
-            case CardType.onHand:
-                //패로 돌아가는거
-                break;
-            case CardType.onDrag:
-                CardManager.Instance.SelectedCard = null;
-                selected = false;
-                break;
-            case CardType.set:
-                CardManager.Instance.OpenCard(this.rectTransform);
-                break;
-        }
-    }
-
-    private void OnPointerDownProcess()
-    {
-        switch (currentType)
-        {
-            case CardType.onHand:
-                CardManager.Instance.SetCardScale(rectTransform, originSize * activeSize, chagneSizeDuration);
-                break;
-            case CardType.onDrag:
-                //
-                break;
-            case CardType.set:
-                CardManager.Instance.ShowCardInformation();
-                break;
-        }
-    }
-    
-    private void OnPointerUpProcess()
-    {
-        switch (currentType)
-        {
-            case CardType.onHand:
-                CardManager.Instance.SetCardScale(rectTransform, originSize, chagneSizeDuration);
-                break;
-            case CardType.onDrag:
-                //
-                break;
-            case CardType.set:
-                CardManager.Instance.HideCardInformation();
-                break;
-        }
-    }
-
-    private bool OnSetArea()
-    {
-        return false;
     }
 }
