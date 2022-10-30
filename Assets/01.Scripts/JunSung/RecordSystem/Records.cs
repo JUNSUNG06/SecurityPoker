@@ -6,13 +6,13 @@ public class Records
 {
     private int playerScore;
     private int aiScore;
-    private bool isWin;
+    private int isWin;
 
     public int PlayerScore => playerScore;
     public int AiScore => aiScore;
-    public bool IsWin => isWin;
+    public int IsWin => isWin;
 
-    public Records(int _playerScore, int _aiScore, bool _isWin)
+    public Records(int _playerScore, int _aiScore, int _isWin)
     {
         playerScore = _playerScore;
         aiScore = _aiScore;
