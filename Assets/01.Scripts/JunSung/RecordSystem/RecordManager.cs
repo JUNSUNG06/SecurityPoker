@@ -51,16 +51,23 @@ public class RecordManager : MonoBehaviour
 
     private void Start()
     {
-        if (File.Exists(SoundAndRecordDataManager.instance.path))
+        /*if (File.Exists(SoundAndRecordDataManager.instance.path + "Record"))
         {
+            SoundAndRecordDataManager.instance.LoadData("Record");
+
             for (int i = 0; i < SoundAndRecordDataManager.instance.recordData.recordList.Count; i++)
             {
-                Debug.Log("생성 불러오깅~");
-                CreateRecord(SoundAndRecordDataManager.instance.recordData.recordList[i].PlayerScore, 
-                    SoundAndRecordDataManager.instance.recordData.recordList[i].AiScore, 
-                    SoundAndRecordDataManager.instance.recordData.recordList[i].IsWin, false);
+                Debug.Log("리코드 불러오깅~");
+                CreateRecord(SoundAndRecordDataManager.instance.recordData.recordList[i].playerScore, 
+                SoundAndRecordDataManager.instance.recordData.recordList[i].aiScore, 
+                SoundAndRecordDataManager.instance.recordData.recordList[i].isWin, false);
             }
         }
+        if (File.Exists(SoundAndRecordDataManager.instance.path))
+        {
+            Debug.Log("파일이 존재!");
+        }*/
+
     }
 
     public void CreateRecord(int _playerScore, int _aiScore, int _isWin, bool _isNewCreat)

@@ -550,6 +550,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1590537838}
   m_CullTransparentMesh: 1
+--- !u!1 &1641374020
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1641374022}
+  - component: {fileID: 1641374021}
+  m_Layer: 0
+  m_Name: Chececc
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1641374021
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641374020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46252a13b0be22247a32d8d4b3a1c994, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  path: 
+--- !u!4 &1641374022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1641374020}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799006047
 GameObject:
   m_ObjectHideFlags: 0
@@ -941,7 +985,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2134270791}
-  - component: {fileID: 2134270793}
   - component: {fileID: 2134270792}
   m_Layer: 0
   m_Name: Check
@@ -949,7 +992,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2134270791
 Transform:
   m_ObjectHideFlags: 0
@@ -962,7 +1005,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2134270792
 MonoBehaviour:
@@ -976,16 +1019,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71e4ec6018b743e44a6f6091a8871aa7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2134270793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2134270790}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46252a13b0be22247a32d8d4b3a1c994, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  path: 
