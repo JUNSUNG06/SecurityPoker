@@ -1,4 +1,4 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -16,6 +16,8 @@ public class Card : MonoBehaviour
     [SerializeField] public TextMeshPro numberText;
     [SerializeField] public TextMeshPro amountText;
 
+    GameController gameController;
+
     private bool isPlayerCard = false;
     public Vector2 originPos;
 
@@ -24,9 +26,18 @@ public class Card : MonoBehaviour
 
     private void Awake()
     {
+        gameController = FindObjectOfType<GameController>();
         numberText = transform.GetChild(0).GetComponent<TextMeshPro>();
         amountText = transform.GetChild(1).GetComponent<TextMeshPro>();
         order = GetComponent<Order>();
+    }
+    private void Update()
+    {
+        if (CardManager.Instance.playerSettingCard.Count == 2)
+        {
+            RandomSet();
+            CardManager.Instance.LastSetUp();
+        }
     }
 
     public void SetUp(bool _isPlayer, int _number, int _amount, int _order)
@@ -50,6 +61,11 @@ public class Card : MonoBehaviour
         }
     }
 
+    public void RandomSet()
+    {
+
+    }
+
     public void Setting(GameObject _cardPrefab, Vector2 _areaPos)
     {
         transform.position = originPos;
@@ -67,8 +83,11 @@ public class Card : MonoBehaviour
         cloneCard.Amount = 0;
         cloneCard.numberText.text = cloneCard.Number.ToString();
         cloneCard.amountText.text = "";
-        cloneCard.HideCard();
-        cloneCard.isClone = true;
+        if(CardManager.Instance.DragCount >= 1)
+        {
+            cloneCard.HideCard();
+            cloneCard.isClone = true;
+        }
     }
 
     public void OpenCard()
@@ -84,15 +103,15 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(isPlayerCard)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.DragCount <= 1)
         {
             CardManager.Instance.MouseDownEvent(this.transform);
-        }      
+        }
     }
 
     private void OnMouseDrag()
     {
-        if(isPlayerCard)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.DragCount <= 1)
         {
             CardManager.Instance.MouseDragEvent();
         }
@@ -100,7 +119,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if(isPlayerCard)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.DragCount <= 1)
         {
             CardManager.Instance.MouseUpEvent();
         }
