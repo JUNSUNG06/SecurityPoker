@@ -5,8 +5,9 @@ using DG.Tweening;
 
 public class Record : MonoBehaviour
 {
-    [SerializeField] GameObject recordCanvas;  //셋팅관련 캔버스
-    [SerializeField] GameObject recordWindow;     //셋팅 창
+    [SerializeField] GameObject recordCanvas;
+    [SerializeField] GameObject recordWindow;
+    //[SerializeField] GameObject ScrollViewHandle;     //그 머냐 리코드 창을 눌렀을 때 핸들이 가장 위에 있게 하고 싶음.
 
     public void Update()
     {
@@ -25,6 +26,8 @@ public class Record : MonoBehaviour
         GetComponent<Setting>().enabled = false;
         recordCanvas.SetActive(true);      //셋팅 캔버스 활성화
         recordWindow.transform.DOScale(new Vector3(1, 1, 1), .5f).SetEase(Ease.OutBack);   //셋팅창 나타나기
+        //ScrollViewHandle.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
+
     }
 
     public void RecordExit()
