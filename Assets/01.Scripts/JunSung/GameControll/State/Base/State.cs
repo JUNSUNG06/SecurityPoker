@@ -1,7 +1,7 @@
 public abstract class State<T>
 {
-    protected StateMachine<T> stateMachine;
-    protected T stateMachineClass;
+    public StateMachine<T> stateMachine;
+    public T stateMachineClass;
 
     public void SetMachineWithClass(StateMachine<T> _stateMachine, T _stateMachineClass)
     {

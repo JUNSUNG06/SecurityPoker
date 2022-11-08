@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
+using Unity.VisualScripting;
+using TMPro.EditorUtilities;
 
 public class CardManager : MonoBehaviour
 {
@@ -23,11 +25,11 @@ public class CardManager : MonoBehaviour
     }
 
     [Header("[사용 가능 카드]")]
-    [SerializeField] private List<Card> playerCards = new List<Card>();
-    [SerializeField] private List<Card> aiCards = new List<Card>();
+    [SerializeField] public List<Card> playerCards = new List<Card>();
+    [SerializeField] public List<Card> aiCards = new List<Card>();
 
     [Header("[세팅된 카드]")]
-    [SerializeField] private List<Card> playerSettingCard = new List<Card>();
+    [SerializeField] public List<Card> playerSettingCard = new List<Card>();
     [SerializeField] private List<Card> aiSettingCard = new List<Card>();
 
     [Header("[카드 프리펩]")]
@@ -46,6 +48,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private bool isDragging;
     [SerializeField] private Transform selectedCard;
     [SerializeField] private LayerMask cardAreaLayer;
+    public int dragCount;
 
     private void Awake()
     {
@@ -53,12 +56,40 @@ public class CardManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(this.gameObject);
+            //selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count - 1) * 1.75f, 0, 0));
+            ++dragCount;
         }       
     }
 
     private void Update()
     {
+        
+    }
+    public void LastSetUp()
+    {
+        int[] cards = new int[100];
+        int maxLength = 0;
+        for(int i = 0; i < 5; i++)
+        {
+            for (int j = 0; j < playerCards[i].amount; j++)
+            {
+                maxLength++;
+                cards[j] = i;
+            }
+        }
+        Debug.Log(maxLength);
+        int RandomCard = Random.Range(0, maxLength - 1);
+        selectedCard = playerCards[cards[RandomCard]].transform;
+        selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0));
+        selectedCard.position = selectedCard.GetComponent<Card>().originPos;
+        selectedCard = null;
+        dragCount++;
+    }
 
+    public void LowCard(int _number)
+    {
+        Debug.Log(playerCards[_number - 1].gameObject);
+        playerCards[_number - 1].gameObject.SetActive(false);
     }
 
     public void CreateCard(bool _isPlayer, int _number, int _amount, Vector2 _position, int _order)
@@ -96,9 +127,10 @@ public class CardManager : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(selectedCard.position, selectedCard.transform.forward, 6f, cardAreaLayer);
         if(hit)
         {
-            playerSettingCard.Add(selectedCard.GetComponent<Card>());
-            selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count - 1) * 1.75f, 0, 0));
+            selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0));
+            ++dragCount;
         }
+
         selectedCard.position = selectedCard.GetComponent<Card>().originPos;
 
         selectedCard = null;

@@ -24,12 +24,9 @@ public class StateStart : State<GameController>
 
     public override void OnStart()
     {
-    
         Debug.Log("State Start Start");
 
         //게임도입효과......
-
-
         //카드 생성
         CreateCard();
     }

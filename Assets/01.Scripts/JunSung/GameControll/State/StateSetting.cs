@@ -13,9 +13,11 @@ public class StateSetting : State<GameController>
     private bool HiddenCardSeetting = false;
     private bool RandomCardSeetting = false;
     private bool TextMove = false;
+    public bool CanSetting = false;
 
     public override void OnAwake()
     {
+        CardManager.Instance.dragCount = 3;
         StateText = stateMachineClass.StateText;
         Debug.Log(2);
     }
@@ -24,39 +26,16 @@ public class StateSetting : State<GameController>
     {
         Debug.Log("State Setting Start");
 
-        //이때부터 카드세팅 가능
-
+        for (int j = 0; j < 5; j++) { CardManager.Instance.playerCards[j].gameObject.SetActive(true); CardManager.Instance.aiCards[j].gameObject.SetActive(true); }
         StateText.text = "Card Setting";
         OnTextMove();//택스트......
     }
 
     public override void OnUpdate(float deltaTime)
     {
-        //카드1장세팅......(플레이어 + AI 동시에)
-
-
-        if (Input.GetButtonDown("Fire1")) { CardSeetting = true; }
-
-        if(CardSeetting == true)
+        if(CardManager.Instance.dragCount >= 3 && TextMove == true)
         {
-            //뒷면카드1장세팅......
-
-
-
-            HiddenCardSeetting = true;
-        }
-
-        if (HiddenCardSeetting == true)
-        {
-            //랜덤카드1장세팅......
-
-
-
-            RandomCardSeetting = true;
-        }
-
-        if(RandomCardSeetting == true && TextMove == true)
-        {
+            for (int i = 0; i < 5; i++) { CardManager.Instance.playerCards[i].gameObject.SetActive(false); CardManager.Instance.aiCards[i].gameObject.SetActive(false); }
             stateMachine.ChangeState<StateChoose>();
         }
     }
@@ -65,7 +44,7 @@ public class StateSetting : State<GameController>
     {
         Debug.Log("State Setting End");
 
-        //코드짜기......
+        CanSetting = false;
 
     }
 
@@ -76,6 +55,8 @@ public class StateSetting : State<GameController>
             StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
             {
                 TextMove = true;
+                CardManager.Instance.dragCount = 0;
+                CanSetting = true;
             });
         });
     }

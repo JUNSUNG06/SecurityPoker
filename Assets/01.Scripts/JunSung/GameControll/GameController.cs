@@ -4,7 +4,7 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
-    private StateMachine<GameController> stateMachine;
+    public StateMachine<GameController> stateMachine;
     
     public enum ChoiceCategory
     {
@@ -25,7 +25,7 @@ public class GameController : MonoBehaviour
 
     private void Start()
     {
-        stateMachine = new StateMachine<GameController>(this, new StateStart());  
+        stateMachine = new StateMachine<GameController>(this, new StateStart());
         stateMachine.AddState(new StateSetting());
         stateMachine.AddState(new StateChoose());
         stateMachine.AddState(new StateCalculate());

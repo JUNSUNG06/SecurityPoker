@@ -4,9 +4,9 @@ using System.Collections.Generic;
 public class StateMachine<T>
 {
     private T stateMachineClass;
-    private Dictionary<Type, State<T>> stateList = new Dictionary<Type, State<T>>();
+    public Dictionary<Type, State<T>> stateList = new Dictionary<Type, State<T>>();
 
-    private State<T> nowState;
+    public State<T> nowState;
     public State<T> NowState;
 
     private float stateDurationTime = 0f;
