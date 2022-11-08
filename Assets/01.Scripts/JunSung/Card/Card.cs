@@ -7,7 +7,7 @@ using DG.Tweening;
 public class Card : MonoBehaviour
 {
     [SerializeField] private int number;
-    [SerializeField] private int amount;
+    [SerializeField] public int amount;
     [SerializeField] private bool isfront;
 
     public int Number { get => number; set => number = value; }
@@ -20,12 +20,14 @@ public class Card : MonoBehaviour
 
     private bool isPlayerCard = false;
     public Vector2 originPos;
+    Vector2 beforSettingPos;
 
     public Order order;
     public bool isClone = false;
 
     private void Awake()
     {
+        beforSettingPos = transform.position;
         gameController = FindObjectOfType<GameController>();
         numberText = transform.GetChild(0).GetComponent<TextMeshPro>();
         amountText = transform.GetChild(1).GetComponent<TextMeshPro>();
@@ -37,6 +39,10 @@ public class Card : MonoBehaviour
         {
             RandomSet();
             CardManager.Instance.LastSetUp();
+        }
+        if(amount == 0)
+        {
+            CardManager.Instance.LowCard(number);
         }
     }
 
@@ -80,14 +86,15 @@ public class Card : MonoBehaviour
         Card cloneCard = cloneCardObj.GetComponent<Card>();
         cloneCard.transform.position = _areaPos;
         cloneCard.Number = this.number;
-        cloneCard.Amount = 0;
+        cloneCard.Amount = -1;
         cloneCard.numberText.text = cloneCard.Number.ToString();
         cloneCard.amountText.text = "";
-        if(CardManager.Instance.DragCount >= 1)
-        {
+        if(CardManager.Instance.dragCount >= 1)
+        { 
             cloneCard.HideCard();
             cloneCard.isClone = true;
         }
+        CardManager.Instance.playerSettingCard.Add(cloneCard);
     }
 
     public void OpenCard()
@@ -103,7 +110,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.DragCount <= 1)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
         {
             CardManager.Instance.MouseDownEvent(this.transform);
         }
@@ -111,7 +118,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.DragCount <= 1)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
         {
             CardManager.Instance.MouseDragEvent();
         }
@@ -119,7 +126,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.DragCount <= 1)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
         {
             CardManager.Instance.MouseUpEvent();
         }

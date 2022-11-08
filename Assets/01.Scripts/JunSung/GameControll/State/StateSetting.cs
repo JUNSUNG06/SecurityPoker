@@ -17,7 +17,7 @@ public class StateSetting : State<GameController>
 
     public override void OnAwake()
     {
-        CardManager.Instance.DragCount = 3;
+        CardManager.Instance.dragCount = 3;
         StateText = stateMachineClass.StateText;
         Debug.Log(2);
     }
@@ -26,15 +26,16 @@ public class StateSetting : State<GameController>
     {
         Debug.Log("State Setting Start");
 
-
+        for (int j = 0; j < 5; j++) { CardManager.Instance.playerCards[j].gameObject.SetActive(true); CardManager.Instance.aiCards[j].gameObject.SetActive(true); }
         StateText.text = "Card Setting";
         OnTextMove();//ÅÃ½ºÆ®......
     }
 
     public override void OnUpdate(float deltaTime)
     {
-        if(CardManager.Instance.DragCount >= 3 && TextMove == true)
+        if(CardManager.Instance.dragCount >= 3 && TextMove == true)
         {
+            for (int i = 0; i < 5; i++) { CardManager.Instance.playerCards[i].gameObject.SetActive(false); CardManager.Instance.aiCards[i].gameObject.SetActive(false); }
             stateMachine.ChangeState<StateChoose>();
         }
     }
@@ -54,7 +55,7 @@ public class StateSetting : State<GameController>
             StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
             {
                 TextMove = true;
-                CardManager.Instance.DragCount = 0;
+                CardManager.Instance.dragCount = 0;
                 CanSetting = true;
             });
         });

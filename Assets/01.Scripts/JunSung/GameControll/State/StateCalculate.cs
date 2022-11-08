@@ -102,6 +102,7 @@ public class StateCalculate : State<GameController>
         {
             StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
             {
+                Debug.Log("죠죠죠죠죠죶죠죠죠죠죠죠죠죠죶죠죠죠죶쭂죶죠죠죠ㅛㅈ");
                 stateMachine.ChangeState<StateSetting>();
             });
         });

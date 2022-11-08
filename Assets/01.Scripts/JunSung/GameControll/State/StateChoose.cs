@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using Unity.VisualScripting;
 
 public class StateChoose : State<GameController>
 {
@@ -11,6 +12,7 @@ public class StateChoose : State<GameController>
     private GameObject GoButton;
     private GameObject DieButton;
     private OnButtonClick onButtonClick;
+    private Card allCard;
 
     private bool PlayerChoose = false;
     private bool AIChoose = false;
@@ -65,9 +67,13 @@ public class StateChoose : State<GameController>
     public override void OnEnd()
     {
         Debug.Log("State Choose End");
-        
         //버튼 비활성화 등 결과준비 + 카드 걍 로테이션으로 뒤집기......
-
+        if(PlayerPrefs.GetString("PlayerChoose") == "GO")
+        {
+            CardManager.Instance.playerSettingCard[0].OpenCard();
+            CardManager.Instance.playerSettingCard[1].OpenCard();
+            CardManager.Instance.playerSettingCard[2].OpenCard();
+        }
     }
 
     public override void OnTextMove()
