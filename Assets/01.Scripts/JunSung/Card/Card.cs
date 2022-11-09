@@ -72,15 +72,20 @@ public class Card : MonoBehaviour
 
     }
 
-    public void Setting(GameObject _cardPrefab, Vector2 _areaPos)
+    public void Setting(GameObject _cardPrefab, Vector2 _areaPos, bool isPlayer)
     {
         transform.position = originPos;
         amount--;
         amountText.text = amount.ToString();
-        CreateClone(_cardPrefab, _areaPos);
+        CreateClone(_cardPrefab, _areaPos, isPlayer).HideCard();
+
+        if(isPlayer)
+        {
+            CardManager.Instance.AiSetCard();
+        }
     }
 
-    public void CreateClone(GameObject _cardPrefab, Vector2 _areaPos)
+    public Card CreateClone(GameObject _cardPrefab, Vector2 _areaPos, bool isPlayer)
     {
         GameObject cloneCardObj = Instantiate(_cardPrefab, Vector2.zero, Quaternion.identity);
         Card cloneCard = cloneCardObj.GetComponent<Card>();
@@ -94,7 +99,17 @@ public class Card : MonoBehaviour
             cloneCard.HideCard();
             cloneCard.isClone = true;
         }
-        CardManager.Instance.playerSettingCard.Add(cloneCard);
+
+        if(isPlayer)
+        {
+            CardManager.Instance.playerSettingCard.Add(cloneCard);
+        }
+        else
+        {
+            CardManager.Instance.aiSettingCard.Add(cloneCard);
+        }
+
+        return cloneCard;
     }
 
     public void OpenCard()

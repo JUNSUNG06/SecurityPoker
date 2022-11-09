@@ -37,6 +37,9 @@ public class StateChoose : State<GameController>
         StateText.text = "Choose";
         OnTextMove();//택스트......
 
+
+        //ai선택
+        CardManager.Instance.AiChoose();
     }
 
     public override void OnUpdate(float deltaTime)

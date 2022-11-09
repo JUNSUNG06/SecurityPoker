@@ -30,7 +30,7 @@ public class CardManager : MonoBehaviour
 
     [Header("[세팅된 카드]")]
     [SerializeField] public List<Card> playerSettingCard = new List<Card>();
-    [SerializeField] private List<Card> aiSettingCard = new List<Card>();
+    [SerializeField] public List<Card> aiSettingCard = new List<Card>();
 
     [Header("[카드 프리펩]")]
     [SerializeField] private GameObject cardPrefab;
@@ -49,6 +49,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private Transform selectedCard;
     [SerializeField] private LayerMask cardAreaLayer;
     public int dragCount;
+    public bool aiIsGo;// true면 ai가 go, false면 die
 
     private void Awake()
     {
@@ -58,7 +59,7 @@ public class CardManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
             //selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count - 1) * 1.75f, 0, 0));
             ++dragCount;
-        }       
+        }
     }
 
     private void Update()
@@ -80,7 +81,7 @@ public class CardManager : MonoBehaviour
         Debug.Log(maxLength);
         int RandomCard = Random.Range(0, maxLength - 1);
         selectedCard = playerCards[cards[RandomCard]].transform;
-        selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0));
+        selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0), true);
         selectedCard.position = selectedCard.GetComponent<Card>().originPos;
         selectedCard = null;
         dragCount++;
@@ -109,6 +110,21 @@ public class CardManager : MonoBehaviour
         }
     }
 
+    public void AiSetCard()
+    {
+        int value = Random.Range(0, aiCards.Count);
+
+        aiCards[value].Setting(cardPrefab, aiCardSettingArea.position - new Vector3((aiSettingCard.Count) * 1.75f, 0 ,0), false);
+        Debug.Log("ai card set");
+    }
+
+    public void AiChoose()
+    {
+        int value = Random.Range(0, 3);
+
+        aiIsGo = value > 0 ? true : false;
+    }
+
     public void MouseDownEvent(Transform _card)
     {
         isDragging = true;
@@ -127,7 +143,7 @@ public class CardManager : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(selectedCard.position, selectedCard.transform.forward, 6f, cardAreaLayer);
         if(hit)
         {
-            selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0));
+            selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0), true);
             ++dragCount;
         }
 
