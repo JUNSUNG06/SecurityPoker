@@ -57,10 +57,13 @@ public class SoundAndRecordDataManager : MonoBehaviour
             for (int i = 0; i < recordData.recordList.Count; i++)
             {
                 Debug.Log("리코드 불러오깅~");
-                Debug.Log(recordData.recordList[i].playerScore);
+                Debug.Log($"{recordData.recordList[i].playerScore}, {recordData.recordList[i].aiScore}, {recordData.recordList[i].isWin}");
 
-                //RecordManager.instance.CreateRecord(recordData.recordList[i].playerScore,
-                //recordData.recordList[i].aiScore, recordData.recordList[i].isWin, false);
+                Debug.Log(RecordManager.instance);
+
+                RecordManager.instance.CreateRecord(
+                    recordData.recordList[i].playerScore,
+                recordData.recordList[i].aiScore, recordData.recordList[i].isWin, false);
             }
         }
         /*if (File.Exists(path))
@@ -69,6 +72,12 @@ public class SoundAndRecordDataManager : MonoBehaviour
         }*/
 
         SaveData("Sound");
+    }
+
+    private void Start()
+    {
+            Debug.Log(RecordManager.instance);
+        
     }
 
     public void SaveData(string whatSave)
