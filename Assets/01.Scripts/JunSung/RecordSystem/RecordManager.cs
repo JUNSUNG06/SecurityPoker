@@ -27,6 +27,7 @@ public class RecordManager : MonoBehaviour
     #endregion
 
     [SerializeField]  GameObject ScrollView;
+    //[SerializeField]  GameObject ScrollViewHandle;
     [SerializeField] GameObject recoredPrefab;
     [SerializeField] Color win;     //플레이어 기준
     [SerializeField] Color lose;
@@ -63,6 +64,7 @@ public class RecordManager : MonoBehaviour
         seeRecord.name = $"Record {recordCount}";
         recordCount++;
         seeRecord.transform.SetParent(ScrollView.transform);
+        seeRecord.transform.localScale = new Vector3(1, 1, 1);
 
         if (_playerScore > _aiScore && _isWin == 1)
         {

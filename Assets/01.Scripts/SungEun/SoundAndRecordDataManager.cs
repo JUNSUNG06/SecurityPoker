@@ -49,7 +49,7 @@ public class SoundAndRecordDataManager : MonoBehaviour
             Debug.Log("Sound 파일이 존재해서 불러왔어욥!");
             LoadData("Sound");
         }
-        if (File.Exists(SoundAndRecordDataManager.instance.path + "Record"))
+        if (File.Exists(path + "Record"))
         {
             Debug.Log("Record 파일이 존재해서 불러왔어욥!");
             LoadData("Record");
@@ -57,7 +57,12 @@ public class SoundAndRecordDataManager : MonoBehaviour
             for (int i = 0; i < recordData.recordList.Count; i++)
             {
                 Debug.Log("리코드 불러오깅~");
-                RecordManager.instance.CreateRecord(recordData.recordList[i].playerScore,
+                Debug.Log($"{recordData.recordList[i].playerScore}, {recordData.recordList[i].aiScore}, {recordData.recordList[i].isWin}");
+
+                Debug.Log(RecordManager.instance);
+
+                RecordManager.instance.CreateRecord(
+                    recordData.recordList[i].playerScore,
                 recordData.recordList[i].aiScore, recordData.recordList[i].isWin, false);
             }
         }
@@ -67,6 +72,12 @@ public class SoundAndRecordDataManager : MonoBehaviour
         }*/
 
         SaveData("Sound");
+    }
+
+    private void Start()
+    {
+            Debug.Log(RecordManager.instance);
+        
     }
 
     public void SaveData(string whatSave)
