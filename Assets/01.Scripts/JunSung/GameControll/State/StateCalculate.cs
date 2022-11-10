@@ -14,6 +14,9 @@ public class StateCalculate : State<GameController>
     private bool AiOnlyGo = false;
     private bool BothDie = false;
 
+    private int playerSetSocre;
+    private int aiSetScore;
+
     public override void OnAwake()
     {
         StateText = stateMachineClass.StateText;
@@ -22,6 +25,7 @@ public class StateCalculate : State<GameController>
         //코드짜기......
 
     }
+
     public override void OnStart()
     {
         Debug.Log("State Caculate Start");
@@ -46,11 +50,13 @@ public class StateCalculate : State<GameController>
         {
             BothDie = false;
         }
+
+        CalculateScore();
     }
 
     public override void OnUpdate(float deltaTime)
     {
-        if (Input.GetButtonDown("Fire1"))
+        /*if (Input.GetButtonDown("Fire1"))
         {
             if (BothGo == true)
             {
@@ -84,7 +90,7 @@ public class StateCalculate : State<GameController>
                 OnTextMove();//택스트......
                 BothDie = false;//반복 못하게 하기......
             }
-        }
+        }*/
     }
 
     public override void OnEnd()
@@ -96,13 +102,42 @@ public class StateCalculate : State<GameController>
         throw new System.NotImplementedException();
     }
 
+    private void CalculateScore()
+    {
+        if(BothGo)
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                playerSetSocre += CardManager.Instance.playerSettingCard[i].Number;
+            }
+
+            for(int i = 0; i < 3; i++)
+            {
+                aiSetScore += CardManager.Instance.aiSettingCard[i].Number;
+            }
+
+            ScoreManager.Instance.AddGameScore(playerSetSocre - aiSetScore, aiSetScore - playerSetSocre);
+        }
+        else if(PlayerOnlyGo)
+        {
+            ScoreManager.Instance.AddGameScore(2, 0);
+        }
+        else if(AiOnlyGo)
+        {
+            ScoreManager.Instance.AddGameScore(0, 2);
+        }
+        else if(BothDie)
+        {
+            ScoreManager.Instance.AddGameScore(0, 0);
+        }
+    }
+
     public override void OnTextMove()
     {
         StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(1, 0)), 1.5f).SetEase(Ease.OutExpo).OnComplete(() =>
         {
             StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
             {
-                Debug.Log("죠죠죠죠죠죶죠죠죠죠죠죠죠죠죶죠죠죠죶쭂죶죠죠죠ㅛㅈ");
                 stateMachine.ChangeState<StateSetting>();
             });
         });
