@@ -25,6 +25,8 @@ public class Card : MonoBehaviour
     public Order order;
     public bool isClone = false;
 
+    private bool canDrag = true;
+
     private void Awake()
     {
         beforSettingPos = transform.position;
@@ -42,7 +44,7 @@ public class Card : MonoBehaviour
         }
         if(amount == 0)
         {
-            CardManager.Instance.LowCard(number);
+            //CardManager.Instance.LowCard(number);
         }
     }
 
@@ -62,8 +64,11 @@ public class Card : MonoBehaviour
         }
         else
         {
-            numberText.text = "?";
-            amountText.text = "";
+            //numberText.text = "?";
+            //amountText.text = "";
+
+            numberText.text = number.ToString();
+            amountText.text = "x" + amount.ToString();
         }
     }
 
@@ -76,12 +81,17 @@ public class Card : MonoBehaviour
     {
         transform.position = originPos;
         amount--;
-        amountText.text = amount.ToString();
+        amountText.text = "x" + amount.ToString();
         CreateClone(_cardPrefab, _areaPos, isPlayer).HideCard();
 
         if(isPlayer)
         {
             CardManager.Instance.AiSetCard();
+        }
+
+        if(amount == 0)
+        {
+            canDrag = false;
         }
     }
 
@@ -135,7 +145,10 @@ public class Card : MonoBehaviour
     {
         if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
         {
-            CardManager.Instance.MouseDragEvent();
+            if(canDrag)
+            {
+                CardManager.Instance.MouseDragEvent();
+            }          
         }
     }
 

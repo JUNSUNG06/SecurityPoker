@@ -20,7 +20,6 @@ public class StateCalculate : State<GameController>
     public override void OnAwake()
     {
         StateText = stateMachineClass.StateText;
-        Debug.Log(4);
 
         //코드짜기......
 
@@ -52,6 +51,7 @@ public class StateCalculate : State<GameController>
         }
 
         CalculateScore();
+        stateMachine.ChangeState<StateSetting>();
     }
 
     public override void OnUpdate(float deltaTime)
@@ -97,9 +97,16 @@ public class StateCalculate : State<GameController>
     {
 
         //다음판으로 정리하기......
-        StateText.text = "Turn End";
 
-        throw new System.NotImplementedException();
+        CardManager.Instance.ClearUsedCard();
+        playerSetSocre = 0;
+        aiSetScore = 0;
+        BothGo = false;
+        BothDie = false;
+        AiOnlyGo = false;
+        PlayerOnlyGo = false;
+
+        StateText.text = "Turn End";
     }
 
     private void CalculateScore()

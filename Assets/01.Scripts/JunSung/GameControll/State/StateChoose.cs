@@ -24,7 +24,6 @@ public class StateChoose : State<GameController>
         GoButton = stateMachineClass.GoButton;
         DieButton = stateMachineClass.DieButton;
         onButtonClick = stateMachineClass.onButtonClick;
-        Debug.Log(3);
     }
 
     public override void OnStart()
@@ -86,6 +85,10 @@ public class StateChoose : State<GameController>
             CardManager.Instance.aiSettingCard[1].OpenCard();
             CardManager.Instance.aiSettingCard[2].OpenCard();
         }
+
+        TextMove = false;
+        PlayerChoose = false;
+        AIChoose = false;
     }
 
     public override void OnTextMove()
@@ -94,7 +97,6 @@ public class StateChoose : State<GameController>
         {
             StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
             {
-                Debug.Log("Á¶¾Æ");
                 TextMove = true;
                 GoButton.SetActive(true);
                 DieButton.SetActive(true);
