@@ -43,6 +43,10 @@ public class CardManager : MonoBehaviour
     public Transform playerCardSettingArea;
     public Transform aiCardSettingArea;
 
+    [Header("[사용한 카드 구역]")]
+    public Transform playerUsedCardArea;
+    public Transform aiUsedCardArea;
+
 
     [Header("[변수]")]
     [SerializeField] private bool isDragging;
@@ -78,7 +82,6 @@ public class CardManager : MonoBehaviour
                 cards[j] = i;
             }
         }
-        Debug.Log(maxLength);
         int RandomCard = Random.Range(0, maxLength - 1);
         selectedCard = playerCards[cards[RandomCard]].transform;
         selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0), true);
@@ -89,13 +92,13 @@ public class CardManager : MonoBehaviour
 
     public void LowCard(int _number)
     {
-        Debug.Log(playerCards[_number - 1].gameObject);
         playerCards[_number - 1].gameObject.SetActive(false);
     }
 
     public void CreateCard(bool _isPlayer, int _number, int _amount, Vector2 _position, int _order)
     {
         GameObject cardObj = Instantiate(cardPrefab, _position, Quaternion.identity);
+        cardObj.name = cardObj.name.Replace("(Clone)", "");
         Card card = cardObj.GetComponent<Card>();
         
         if(_isPlayer)
@@ -123,6 +126,25 @@ public class CardManager : MonoBehaviour
         int value = Random.Range(0, 3);
 
         aiIsGo = value > 0 ? true : false;
+    }
+
+    public void ClearUsedCard()
+    {
+        for(int i = 2; i >= 0; i--)
+        {
+            playerSettingCard[i].transform.position = playerUsedCardArea.position;
+            playerSettingCard[i].HideCard();
+        }
+            
+        playerSettingCard.Clear();
+
+        for (int i = 2; i >= 0; i--)
+        {
+            aiSettingCard[i].transform.position = aiUsedCardArea.position;
+            aiSettingCard[i].HideCard();
+        }
+            
+        aiSettingCard.Clear();
     }
 
     public void MouseDownEvent(Transform _card)

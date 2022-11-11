@@ -15,7 +15,6 @@ public class StateStart : State<GameController>
     public override void OnAwake()
     {
         StateText = stateMachineClass.StateText;
-        Debug.Log(1);
 
         //맨 처음에 게임시작 택스트......
         StateText.text = "GameStart!";

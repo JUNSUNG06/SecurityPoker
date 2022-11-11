@@ -9,9 +9,6 @@ public class StateSetting : State<GameController>
 {
     private TextMeshProUGUI StateText;
 
-    private bool CardSeetting = false;
-    private bool HiddenCardSeetting = false;
-    private bool RandomCardSeetting = false;
     private bool TextMove = false;
     public bool CanSetting = false;
 
@@ -19,7 +16,6 @@ public class StateSetting : State<GameController>
     {
         CardManager.Instance.dragCount = 3;
         StateText = stateMachineClass.StateText;
-        Debug.Log(2);
     }
 
     public override void OnStart()
@@ -35,7 +31,7 @@ public class StateSetting : State<GameController>
     {
         if(CardManager.Instance.dragCount >= 3 && TextMove == true)
         {
-            for (int i = 0; i < 5; i++) { CardManager.Instance.playerCards[i].gameObject.SetActive(false); CardManager.Instance.aiCards[i].gameObject.SetActive(false); }
+            //for (int i = 0; i < 5; i++) { CardManager.Instance.playerCards[i].gameObject.SetActive(false); CardManager.Instance.aiCards[i].gameObject.SetActive(false); }
             stateMachine.ChangeState<StateChoose>();
         }
     }
@@ -44,8 +40,9 @@ public class StateSetting : State<GameController>
     {
         Debug.Log("State Setting End");
 
+        CardManager.Instance.dragCount = 0;
+        TextMove = false;
         CanSetting = false;
-
     }
 
     public override void OnTextMove()

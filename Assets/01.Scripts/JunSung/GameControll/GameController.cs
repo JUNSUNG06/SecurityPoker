@@ -27,9 +27,4 @@ public class GameController : MonoBehaviour
     {
         stateMachine.Updata(Time.deltaTime);
     }
-
-    public void SetScore()
-    {
-
-    }
 }
