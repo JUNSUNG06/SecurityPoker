@@ -138,7 +138,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && GameController.Instance.canDarg)
         {
             if(amount > 0)
             {

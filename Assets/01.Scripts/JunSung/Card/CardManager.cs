@@ -215,4 +215,15 @@ public class CardManager : MonoBehaviour
 
         Debug.Log("Get used card");
     }
+
+    public bool EmptyCard()
+    {
+        for(int i = 0; i < playerCards.Count; i++)
+        {
+            if (playerCards[i].Amount != 0)
+                return false;
+        }
+
+        return true;
+    }
 }
