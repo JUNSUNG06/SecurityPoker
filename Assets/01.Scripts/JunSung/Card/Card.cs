@@ -25,8 +25,6 @@ public class Card : MonoBehaviour
     public Order order;
     public bool isClone = false;
 
-    private bool canDrag = true;
-
     private void Awake()
     {
         beforSettingPos = transform.position;
@@ -39,7 +37,6 @@ public class Card : MonoBehaviour
     {
         if (CardManager.Instance.playerSettingCard.Count == 2)
         {
-            RandomSet();
             CardManager.Instance.LastSetUp();
         }
         if(amount == 0)
@@ -72,11 +69,6 @@ public class Card : MonoBehaviour
         }
     }
 
-    public void RandomSet()
-    {
-
-    }
-
     public void Setting(GameObject _cardPrefab, Vector2 _areaPos, bool isPlayer)
     {
         transform.position = originPos;
@@ -87,11 +79,6 @@ public class Card : MonoBehaviour
         if(isPlayer)
         {
             CardManager.Instance.AiSetCard();
-        }
-
-        if(amount == 0)
-        {
-            canDrag = false;
         }
     }
 
@@ -133,6 +120,14 @@ public class Card : MonoBehaviour
         amountText.text = "";
     }
 
+    public void SetAmount(int value)
+    {
+        amount = value;
+        amountText.text = $"x{amount}";
+
+        Debug.Log("set amount");
+    }
+
     private void OnMouseDown()
     {
         if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
@@ -145,7 +140,7 @@ public class Card : MonoBehaviour
     {
         if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
         {
-            if(canDrag)
+            if(amount > 0)
             {
                 CardManager.Instance.MouseDragEvent();
             }          

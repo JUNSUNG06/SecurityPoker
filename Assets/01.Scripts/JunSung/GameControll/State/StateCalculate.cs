@@ -16,6 +16,7 @@ public class StateCalculate : State<GameController>
 
     private int playerSetSocre;
     private int aiSetScore;
+    private int gameSetValue = 0;
 
     public override void OnAwake()
     {
@@ -97,6 +98,13 @@ public class StateCalculate : State<GameController>
     {
 
         //다음판으로 정리하기......
+
+        gameSetValue++;
+
+        if(gameSetValue >= 2)
+        {
+            CardManager.Instance.GetUesdCard();
+        }
 
         CardManager.Instance.ClearUsedCard();
         playerSetSocre = 0;
