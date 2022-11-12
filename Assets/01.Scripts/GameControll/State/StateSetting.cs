@@ -42,7 +42,7 @@ public class StateSetting : State<GameController>
 
         CardManager.Instance.dragCount = 0;
         TextMove = false;
-        CanSetting = false;
+        stateMachineClass.canDrag = false;
     }
 
     public override void OnTextMove()
@@ -53,7 +53,7 @@ public class StateSetting : State<GameController>
             {
                 TextMove = true;
                 CardManager.Instance.dragCount = 0;
-                CanSetting = true;
+                stateMachineClass.canDrag = true;
             });
         });
     }

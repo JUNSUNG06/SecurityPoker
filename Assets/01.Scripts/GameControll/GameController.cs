@@ -4,6 +4,8 @@ using TMPro;
 
 public class GameController : MonoBehaviour
 {
+    public static GameController Instance;
+
     public StateMachine<GameController> stateMachine;
 
     public TextMeshProUGUI StateText;
@@ -11,6 +13,16 @@ public class GameController : MonoBehaviour
     public GameObject GoButton;
     public GameObject DieButton;
     public OnButtonClick onButtonClick;
+
+    public bool canDrag = false;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else 
+            Destroy(this.gameObject);
+    }
 
     private void Start()
     {
@@ -27,4 +39,11 @@ public class GameController : MonoBehaviour
     {
         stateMachine.Updata(Time.deltaTime);
     }
+
+    public void EndGame()
+    {
+        EndGame endGame = GameObject.Find("Canvas/GameOver").GetComponent<EndGame>();
+
+        endGame.ShowEndPanel();
+    }    
 }
