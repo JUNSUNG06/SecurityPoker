@@ -32,6 +32,10 @@ public class CardManager : MonoBehaviour
     [SerializeField] public List<Card> playerSettingCard = new List<Card>();
     [SerializeField] public List<Card> aiSettingCard = new List<Card>();
 
+    [Header("[사용한 카드 카드]")]
+    [SerializeField] public List<Card> playerUsedCard = new List<Card>();
+    [SerializeField] public List<Card> aiUsedCard = new List<Card>();
+
     [Header("[카드 프리펩]")]
     [SerializeField] private GameObject cardPrefab;
 
@@ -117,7 +121,14 @@ public class CardManager : MonoBehaviour
     {
         int value = Random.Range(0, aiCards.Count);
 
+        if(aiCards[value].Amount == 0)
+        {
+            AiSetCard();
+            return;
+        }
+
         aiCards[value].Setting(cardPrefab, aiCardSettingArea.position - new Vector3((aiSettingCard.Count) * 1.75f, 0 ,0), false);
+
         Debug.Log("ai card set");
     }
 
@@ -133,6 +144,7 @@ public class CardManager : MonoBehaviour
         for(int i = 2; i >= 0; i--)
         {
             playerSettingCard[i].transform.position = playerUsedCardArea.position;
+            playerUsedCard.Add(playerSettingCard[i]);
             playerSettingCard[i].HideCard();
         }
             
@@ -141,6 +153,7 @@ public class CardManager : MonoBehaviour
         for (int i = 2; i >= 0; i--)
         {
             aiSettingCard[i].transform.position = aiUsedCardArea.position;
+            aiUsedCard.Add(aiSettingCard[i]);
             aiSettingCard[i].HideCard();
         }
             
@@ -172,5 +185,34 @@ public class CardManager : MonoBehaviour
         selectedCard.position = selectedCard.GetComponent<Card>().originPos;
 
         selectedCard = null;
+    }
+
+    public void GetUesdCard()
+    {
+        int playerCardIndex = UnityEngine.Random.Range(0, playerUsedCard.Count);
+        int aiCardIndex = UnityEngine.Random.Range(0, aiUsedCard.Count);
+
+        Card playerCard = playerUsedCard[playerCardIndex];
+        Card aiCard = aiUsedCard[aiCardIndex];
+
+        for(int i = 0; i < playerCards.Count; i++)
+        {
+            if(playerCard.Number == i + 1)
+            {
+                Debug.Log(i + 1);
+                playerCards[i].SetAmount(playerCards[i].Amount + 1);
+                playerUsedCard.RemoveAt(playerCardIndex);
+                Destroy(playerCard.gameObject);
+            }
+
+            if (aiCard.Number == i + 1)
+            {
+                aiCards[i].SetAmount(aiCards[i].Amount + 1);
+                aiUsedCard.RemoveAt(aiCardIndex);
+                Destroy(aiCard.gameObject);
+            }
+        }
+
+        Debug.Log("Get used card");
     }
 }
