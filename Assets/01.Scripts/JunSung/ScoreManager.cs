@@ -10,6 +10,9 @@ public class ScoreManager : MonoBehaviour
     private int playerGameScore = 0;
     private int aiGameScore = 0;
 
+    public int PlayerGameScore => playerGameScore;
+    public int AIGameScore => aiGameScore;
+
     public TextMeshProUGUI playerScoreText;
     public TextMeshProUGUI aiScoreText;
 
@@ -29,5 +32,10 @@ public class ScoreManager : MonoBehaviour
 
         playerScoreText.text = playerGameScore.ToString();
         aiScoreText.text = aiGameScore.ToString();
+    }
+
+    public int CompareScore()
+    {
+        return playerGameScore - aiGameScore;
     }
 }

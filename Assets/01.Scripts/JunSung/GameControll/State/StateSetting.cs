@@ -10,7 +10,6 @@ public class StateSetting : State<GameController>
     private TextMeshProUGUI StateText;
 
     private bool TextMove = false;
-    public bool CanSetting = false;
 
     public override void OnAwake()
     {
@@ -22,6 +21,7 @@ public class StateSetting : State<GameController>
     {
         Debug.Log("State Setting Start");
 
+        stateMachineClass.canDarg = false;
         for (int j = 0; j < 5; j++) { CardManager.Instance.playerCards[j].gameObject.SetActive(true); CardManager.Instance.aiCards[j].gameObject.SetActive(true); }
         StateText.text = "Card Setting";
         OnTextMove();//ÅÃ½ºÆ®......
@@ -42,7 +42,7 @@ public class StateSetting : State<GameController>
 
         CardManager.Instance.dragCount = 0;
         TextMove = false;
-        CanSetting = false;
+        stateMachineClass.canDarg = false;
     }
 
     public override void OnTextMove()
@@ -53,7 +53,7 @@ public class StateSetting : State<GameController>
             {
                 TextMove = true;
                 CardManager.Instance.dragCount = 0;
-                CanSetting = true;
+                stateMachineClass.canDarg = true;
             });
         });
     }
