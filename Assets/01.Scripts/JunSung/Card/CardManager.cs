@@ -146,6 +146,7 @@ public class CardManager : MonoBehaviour
             playerSettingCard[i].transform.position = playerUsedCardArea.position;
             playerUsedCard.Add(playerSettingCard[i]);
             playerSettingCard[i].HideCard();
+            playerSettingCard[i].isSetting = false;
         }
             
         playerSettingCard.Clear();
@@ -155,6 +156,7 @@ public class CardManager : MonoBehaviour
             aiSettingCard[i].transform.position = aiUsedCardArea.position;
             aiUsedCard.Add(aiSettingCard[i]);
             aiSettingCard[i].HideCard();
+            aiSettingCard[i].isSetting = false;
         }
             
         aiSettingCard.Clear();
@@ -225,5 +227,11 @@ public class CardManager : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void ChooseCard(Card card)
+    {
+        card.OpenCard();
+        aiSettingCard[UnityEngine.Random.Range(0, 3)].OpenCard();
     }
 }

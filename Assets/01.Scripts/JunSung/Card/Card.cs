@@ -24,6 +24,8 @@ public class Card : MonoBehaviour
 
     public Order order;
     public bool isClone = false;
+    public bool isSetting = false;
+    public bool isHide = false;
 
     private void Awake()
     {
@@ -88,16 +90,21 @@ public class Card : MonoBehaviour
         Card cloneCard = cloneCardObj.GetComponent<Card>();
         cloneCard.transform.position = _areaPos;
         cloneCard.Number = this.number;
-        cloneCard.Amount = -1;
-        cloneCard.numberText.text = cloneCard.Number.ToString();
-        cloneCard.amountText.text = "";
-        if(CardManager.Instance.dragCount >= 1)
+        cloneCard.Amount = 0;
+        //cloneCard.numberText.text = cloneCard.Number.ToString();
+        //cloneCard.amountText.text = "";
+        /*if(CardManager.Instance.dragCount >= 1)
         { 
             cloneCard.HideCard();
             cloneCard.isClone = true;
-        }
+        }*/
 
-        if(isPlayer)
+        //cloneCard.HideCard();
+        cloneCard.isClone = true;
+        cloneCard.isSetting = true;
+        cloneCard.isPlayerCard = isPlayer;
+
+        if (isPlayer)
         {
             CardManager.Instance.playerSettingCard.Add(cloneCard);
         }
@@ -112,12 +119,15 @@ public class Card : MonoBehaviour
     public void OpenCard()
     {
         numberText.text = number.ToString();
+        numberText.color = new Color(0, 0, 0, 1);
+        isHide = false;
     }
 
     public void HideCard()
     {
         numberText.text = "?";
         amountText.text = "";
+        isHide = true;
     }
 
     public void SetAmount(int value)
@@ -128,11 +138,22 @@ public class Card : MonoBehaviour
         Debug.Log("set amount");
     }
 
+    public void ShowInfo()
+    {
+        numberText.text = this.Number.ToString();
+        numberText.color = new Color(0, 0, 0, 0.35f);
+    }
+
     private void OnMouseDown()
     {
         if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
         {
             CardManager.Instance.MouseDownEvent(this.transform);
+        }
+        else if (GameController.Instance.stateMachine.nowState.GetType() == typeof(StateChoose) && isSetting && isPlayerCard && isHide && gameController.canChoose)
+        {
+            CardManager.Instance.ChooseCard(this);
+            gameController.isChoose = true;
         }
     }
 
@@ -152,6 +173,22 @@ public class Card : MonoBehaviour
         if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
         {
             CardManager.Instance.MouseUpEvent();
+        }
+    }
+
+    private void OnMouseEnter()
+    {
+        if(GameController.Instance.stateMachine.nowState.GetType() == typeof(StateChoose) && isSetting && isPlayerCard && isHide && gameController.canChoose)
+        {
+            ShowInfo();
+        }
+    }
+    private void OnMouseExit()
+    {
+        if (GameController.Instance.stateMachine.nowState.GetType() == typeof(StateChoose) && isSetting && isPlayerCard && isHide)
+        {
+            HideCard();
+            numberText.color = new Color(0, 0, 0, 255);
         }
     }
 }
