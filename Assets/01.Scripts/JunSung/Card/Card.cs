@@ -74,7 +74,7 @@ public class Card : MonoBehaviour
     public void Setting(GameObject _cardPrefab, Vector2 _areaPos, bool isPlayer)
     {
         transform.position = originPos;
-        amount--;
+        --amount;
         amountText.text = "x" + amount.ToString();
         CreateClone(_cardPrefab, _areaPos, isPlayer).HideCard();
 
@@ -86,9 +86,9 @@ public class Card : MonoBehaviour
 
     public Card CreateClone(GameObject _cardPrefab, Vector2 _areaPos, bool isPlayer)
     {
-        GameObject cloneCardObj = Instantiate(_cardPrefab, Vector2.zero, Quaternion.identity);
+        GameObject cloneCardObj = Instantiate(_cardPrefab, _cardPrefab.transform.position, Quaternion.identity);
         Card cloneCard = cloneCardObj.GetComponent<Card>();
-        cloneCard.transform.position = _areaPos;
+        cloneCard.transform.DOMove(_areaPos, 0.5f).SetEase(Ease.InSine);
         cloneCard.Number = this.number;
         cloneCard.Amount = 0;
         //cloneCard.numberText.text = cloneCard.Number.ToString();

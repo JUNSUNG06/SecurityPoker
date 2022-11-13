@@ -108,7 +108,6 @@ public class StateCalculate : State<GameController>
         //다음판으로 정리하기......
 
         CardManager.Instance.ClearUsedCard();
-        CardManager.Instance.GetUesdCard();
         playerSetSocre = 0;
         aiSetScore = 0;
         BothGo = false;

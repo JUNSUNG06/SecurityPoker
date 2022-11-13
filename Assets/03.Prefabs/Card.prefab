@@ -370,7 +370,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3947818158963964919}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -6, y: 3.7, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.5}
   m_Children:
   - {fileID: 3947818157219481581}
@@ -447,8 +447,11 @@ MonoBehaviour:
   isfront: 0
   numberText: {fileID: 0}
   amountText: {fileID: 0}
+  originPos: {x: 0, y: 0}
   order: {fileID: 0}
   isClone: 0
+  isSetting: 0
+  isHide: 0
 --- !u!114 &3947818158963964920
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Unity.VisualScripting;
 using TMPro.EditorUtilities;
+using Newtonsoft.Json.Linq;
 
 public class CardManager : MonoBehaviour
 {
@@ -87,7 +88,8 @@ public class CardManager : MonoBehaviour
             }
         }
         int RandomCard = Random.Range(0, maxLength - 1);
-        selectedCard = playerCards[cards[RandomCard]].transform;
+        cardPrefab.transform.position = playerCards[cards[RandomCard]].transform.position;
+        selectedCard = playerCards[2].transform;
         selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0), true);
         selectedCard.position = selectedCard.GetComponent<Card>().originPos;
         selectedCard = null;
@@ -126,7 +128,7 @@ public class CardManager : MonoBehaviour
             AiSetCard();
             return;
         }
-
+        cardPrefab.transform.position = aiCards[3].transform.position;
         aiCards[value].Setting(cardPrefab, aiCardSettingArea.position - new Vector3((aiSettingCard.Count) * 1.75f, 0 ,0), false);
 
         Debug.Log("ai card set");
@@ -141,9 +143,10 @@ public class CardManager : MonoBehaviour
 
     public void ClearUsedCard()
     {
+        int startGetUesdCard = 0;
         for(int i = 2; i >= 0; i--)
         {
-            playerSettingCard[i].transform.position = playerUsedCardArea.position;
+            playerSettingCard[i].transform.DOMove(playerUsedCardArea.position, 0.5f).SetEase(Ease.InSine);
             playerUsedCard.Add(playerSettingCard[i]);
             playerSettingCard[i].HideCard();
             playerSettingCard[i].isSetting = false;
@@ -153,7 +156,8 @@ public class CardManager : MonoBehaviour
 
         for (int i = 2; i >= 0; i--)
         {
-            aiSettingCard[i].transform.position = aiUsedCardArea.position;
+            aiSettingCard[i].transform.DOMove(aiUsedCardArea.position, 0.5f).SetEase(Ease.InSine)
+            .OnComplete(() => { ++startGetUesdCard; if (startGetUesdCard >= 3) { GetUesdCard(); } });
             aiUsedCard.Add(aiSettingCard[i]);
             aiSettingCard[i].HideCard();
             aiSettingCard[i].isSetting = false;
@@ -180,6 +184,7 @@ public class CardManager : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(selectedCard.position, selectedCard.transform.forward, 6f, cardAreaLayer);
         if(hit)
         {
+            cardPrefab.transform.position = selectedCard.transform.position;
             selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0), true);
             ++dragCount;
         }
@@ -197,25 +202,28 @@ public class CardManager : MonoBehaviour
         Card playerCard = playerUsedCard[playerCardIndex];
         Card aiCard = aiUsedCard[aiCardIndex];
 
-        for(int i = 0; i < playerCards.Count; i++)
+        for (int i = 0; i < playerCards.Count; i++)
         {
-            if(playerCard.Number == i + 1)
+            if (playerCard.Number == i + 1)
             {
+                Debug.Log(playerCard.Number);
                 Debug.Log(i + 1);
                 playerCards[i].SetAmount(playerCards[i].Amount + 1);
                 playerUsedCard.RemoveAt(playerCardIndex);
-                Destroy(playerCard.gameObject);
+                playerCard.transform.DOMove(playerCards[playerCard.amount].transform.position, 0.5f).SetEase(Ease.InSine)
+                .OnComplete(() => { Destroy(playerCard.gameObject); });
             }
 
             if (aiCard.Number == i + 1)
             {
                 aiCards[i].SetAmount(aiCards[i].Amount + 1);
                 aiUsedCard.RemoveAt(aiCardIndex);
-                Destroy(aiCard.gameObject);
+                aiCard.transform.DOMove(aiCards[aiCard.amount].transform.position, 0.5f).SetEase(Ease.InSine)
+                .OnComplete(() => { Destroy(aiCard.gameObject); });
             }
-        }
 
         Debug.Log("Get used card");
+        }
     }
 
     public bool EmptyCard()
