@@ -9,8 +9,11 @@ public class EndGame : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI resultText;
 
+    private int resultValue = 0;
+
     public void LoadIntroScene()
     {
+        RecordManager.instance.CreateRecord(ScoreManager.Instance.PlayerGameScore, ScoreManager.Instance.AIGameScore, resultValue, true);
         SceneManager.LoadScene("Intro");
     }
 
@@ -26,17 +29,20 @@ public class EndGame : MonoBehaviour
         if(scoreDiff > 0)
         {
             resultText.color = Color.red;
-            scoreText.text = "Win";
+            resultText.text = "Win";
+            resultValue = 1;
         }
         if (scoreDiff < 0)
         {
             resultText.color = Color.blue;
-            scoreText.text = "Lose";
+            resultText.text = "Lose";
+            resultValue = 2;
         }
         if (scoreDiff == 0)
         {
             resultText.color = Color.gray;
-            scoreText.text = "Draw";
+            resultText.text = "Draw";
+            resultValue = 3;
         }
         
         scoreText.text = $"{ScoreManager.Instance.PlayerGameScore} : {ScoreManager.Instance.AIGameScore}";
