@@ -33,6 +33,9 @@ public class StateChoose : State<GameController>
         //이때부터 선택 가능......
         onButtonClick.Click = false;
 
+        stateMachineClass.isChoose = false;
+        stateMachineClass.canChoose = false;
+
         StateText.text = "Choose";
         OnTextMove();//택스트......
 
@@ -63,6 +66,14 @@ public class StateChoose : State<GameController>
         if(PlayerChoose == true && AIChoose == true && TextMove == true)
         {
             stateMachine.ChangeState<StateCalculate>();
+        }
+
+        if(stateMachineClass.isChoose)
+        {
+            GoButton.SetActive(true);
+            DieButton.SetActive(true);
+            stateMachineClass.isChoose = false;
+            stateMachineClass.canChoose = false;
         }
     }
 
@@ -98,8 +109,7 @@ public class StateChoose : State<GameController>
             StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
             {
                 TextMove = true;
-                GoButton.SetActive(true);
-                DieButton.SetActive(true);
+                stateMachineClass.canChoose = true;           
             });
         });
     }

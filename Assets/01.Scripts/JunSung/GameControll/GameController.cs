@@ -15,6 +15,8 @@ public class GameController : MonoBehaviour
     public OnButtonClick onButtonClick;
 
     public bool canDarg = false;
+    public bool canChoose = false;
+    public bool isChoose = false;
 
     private void Awake()
     {
