@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 21768251}
   - component: {fileID: 21768250}
   m_Layer: 5
-  m_Name: ResultText
+  m_Name: ScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1034,8 +1034,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e1fceb7ed0b2b944a2a31ea27ed5d99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 2023935242}
-  resultText: {fileID: 21768250}
+  scoreText: {fileID: 21768250}
+  resultText: {fileID: 2023935242}
 --- !u!114 &851864998
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2392,6 +2392,9 @@ MonoBehaviour:
   GoButton: {fileID: 1688627303}
   DieButton: {fileID: 2032629880}
   onButtonClick: {fileID: 1434343741}
+  canDarg: 0
+  canChoose: 0
+  isChoose: 0
 --- !u!1 &2023935241
 GameObject:
   m_ObjectHideFlags: 0
@@ -2404,7 +2407,7 @@ GameObject:
   - component: {fileID: 2023935243}
   - component: {fileID: 2023935242}
   m_Layer: 5
-  m_Name: ScoreText
+  m_Name: ResultText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
