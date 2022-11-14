@@ -11,7 +11,7 @@ public class Order : MonoBehaviour
 
     private void Start()
     {
-        SetOrder(0);
+        
     }
 
     public void SetOriginOrder(int _originOrder)

@@ -22,7 +22,7 @@ public class Card : MonoBehaviour
     public Vector2 originPos;
     Vector2 beforSettingPos;
 
-    public Order order;
+    private Order order;
     public bool isClone = false;
     public bool isSetting = false;
     public bool isHide = false;
@@ -54,7 +54,7 @@ public class Card : MonoBehaviour
         number = _number;
         amount = _amount;
         originPos = transform.position;
-        order.SetOriginOrder(_order);
+        order.SetOrder(_order);
 
         if(isfront)
         {
@@ -63,11 +63,8 @@ public class Card : MonoBehaviour
         }
         else
         {
-            //numberText.text = "?";
-            //amountText.text = "";
-
-            numberText.text = number.ToString();
-            amountText.text = "x" + amount.ToString();
+            numberText.text = "?";
+            amountText.text = "";
         }
     }
 
@@ -75,7 +72,8 @@ public class Card : MonoBehaviour
     {
         transform.position = originPos;
         --amount;
-        amountText.text = "x" + amount.ToString();
+        if(isPlayer)
+            amountText.text = "x" + amount.ToString();
         CreateClone(_cardPrefab, _areaPos, isPlayer).HideCard();
 
         if(isPlayer)
@@ -130,10 +128,11 @@ public class Card : MonoBehaviour
         isHide = true;
     }
 
-    public void SetAmount(int value)
+    public void SetAmount(int value, bool isPlayer)
     {
         amount = value;
-        amountText.text = $"x{amount}";
+        if(isPlayer)
+            amountText.text = $"x{amount}";
 
         Debug.Log("set amount");
     }
