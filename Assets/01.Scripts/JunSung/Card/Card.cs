@@ -73,8 +73,8 @@ public class Card : MonoBehaviour
 
     public void Setting(GameObject _cardPrefab, Vector2 _areaPos, bool isPlayer)
     {
-        transform.position = originPos;
         --amount;
+        transform.position = originPos;
         amountText.text = "x" + amount.ToString();
         CreateClone(_cardPrefab, _areaPos, isPlayer).HideCard();
 
