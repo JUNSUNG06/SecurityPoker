@@ -209,7 +209,7 @@ public class CardManager : MonoBehaviour
             {
                 Debug.Log(playerCard.Number);
                 Debug.Log(i + 1);
-                playerCards[i].SetAmount(playerCards[i].Amount + 1);
+                playerCards[i].SetAmount(playerCards[i].Amount + 1, true);
                 playerUsedCard.RemoveAt(playerCardIndex);
                 playerCard.transform.DOMove(playerCards[playerCard.amount].transform.position, 0.5f).SetEase(Ease.InSine)
                 .OnComplete(() => { Destroy(playerCard.gameObject); });
@@ -217,7 +217,7 @@ public class CardManager : MonoBehaviour
 
             if (aiCard.Number == i + 1)
             {
-                aiCards[i].SetAmount(aiCards[i].Amount + 1);
+                aiCards[i].SetAmount(aiCards[i].Amount + 1, false);
                 aiUsedCard.RemoveAt(aiCardIndex);
                 aiCard.transform.DOMove(aiCards[aiCard.amount].transform.position, 0.5f).SetEase(Ease.InSine)
                 .OnComplete(() => { Destroy(aiCard.gameObject); });

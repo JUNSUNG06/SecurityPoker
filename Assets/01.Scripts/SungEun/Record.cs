@@ -36,7 +36,7 @@ public class Record : MonoBehaviour
         Invoke("RealExit", .5f);    //셋팅 캔버스의 사라지는 시간은 0.5초 이후에 셋팅창이 사라지는 시간이 0.5초라서
     }
 
-    void RealExit()
+    public void RealExit()
     {
         recordCanvas.SetActive(false);     //셋팅 캔버스 비활성화
         GetComponent<Setting>().enabled = true;
