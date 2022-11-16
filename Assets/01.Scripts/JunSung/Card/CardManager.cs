@@ -81,15 +81,16 @@ public class CardManager : MonoBehaviour
         int maxLength = 0;
         for(int i = 0; i < 5; i++)
         {
-            for (int j = 0; j < playerCards[i].amount; j++)
+            for (int j = 0; j <= playerCards[i].amount - 1; j++)
             {
+                cards[maxLength] = i;
                 maxLength++;
-                cards[j] = i;
             }
         }
         int RandomCard = Random.Range(0, maxLength - 1);
+        Debug.Log(cards[RandomCard]);
         cardPrefab.transform.position = playerCards[cards[RandomCard]].transform.position;
-        selectedCard = playerCards[2].transform;
+        selectedCard = playerCards[cards[RandomCard]].transform;
         selectedCard.GetComponent<Card>().Setting(cardPrefab, playerCardSettingArea.position + new Vector3((playerSettingCard.Count) * 1.75f, 0, 0), true);
         selectedCard.position = selectedCard.GetComponent<Card>().originPos;
         selectedCard = null;
