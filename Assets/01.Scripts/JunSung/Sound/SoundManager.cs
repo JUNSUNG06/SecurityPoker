@@ -16,13 +16,15 @@ public class SoundManager : MonoBehaviour
             Instance = this;
         else
             Destroy(this.gameObject);
+
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
     {
         for(int i = 0; i < soundPrefabs.Count; i++)
         {
-            SoundPool _pool = new SoundPool(soundPrefabs[i]);
+            SoundPool _pool = new SoundPool(soundPrefabs[i], transform);
             poolDictionary.Add(soundPrefabs[i].name, _pool);
         }
     }
@@ -31,6 +33,7 @@ public class SoundManager : MonoBehaviour
     {
         if(poolDictionary.TryGetValue(_source.name, out SoundPool pool))
         {
+            Debug.Log("push");
             pool.Push(_source);
         }
     }

@@ -14,6 +14,7 @@ public class EndGame : MonoBehaviour
     public void LoadIntroScene()
     {
         RecordManager.instance.CreateRecord(ScoreManager.Instance.PlayerGameScore, ScoreManager.Instance.AIGameScore, resultValue, true);
+        SoundManager.Instance.Pop("MP_Tick");
         SceneManager.LoadScene("Intro");
     }
 

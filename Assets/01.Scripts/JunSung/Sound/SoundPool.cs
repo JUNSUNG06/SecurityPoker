@@ -6,15 +6,19 @@ public class SoundPool
 {
     private Stack<AudioSource> pool;
     private AudioSource sourcePrefab;
+    private Transform parent;
 
-    public SoundPool(AudioSource _source)
+    public SoundPool(AudioSource _source, Transform _parent)
     {
         sourcePrefab = _source;
+        parent = _parent;
         pool = new Stack<AudioSource>();
 
         for(int i = 0; i < 10; i++)
         {
-            AudioSource source = GameObject.Instantiate(sourcePrefab) as AudioSource;
+            AudioSource source = GameObject.Instantiate(sourcePrefab, parent) as AudioSource;
+            source.name = source.name.Replace("(Clone)", "");
+            source.gameObject.SetActive(false);
             pool.Push(source);
         }
     }
@@ -32,7 +36,8 @@ public class SoundPool
 
         if (pool.Count <= 0)
         {
-            _source = GameObject.Instantiate(sourcePrefab) as AudioSource;
+            _source = GameObject.Instantiate(sourcePrefab, parent) as AudioSource;
+            _source.name = _source.name.Replace("(Clone)", "");
             _source.gameObject.SetActive(false);
             pool.Push(_source);
         }

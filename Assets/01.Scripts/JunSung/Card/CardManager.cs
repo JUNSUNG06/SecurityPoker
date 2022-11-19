@@ -95,6 +95,7 @@ public class CardManager : MonoBehaviour
         selectedCard.position = selectedCard.GetComponent<Card>().originPos;
         selectedCard = null;
         dragCount++;
+        SoundManager.Instance.Pop("MP__ (1)");
     }
 
     public void LowCard(int _number)
@@ -171,6 +172,7 @@ public class CardManager : MonoBehaviour
     {
         isDragging = true;
         selectedCard = _card;
+        SoundManager.Instance.Pop("MP__ (1)");
     }
 
     public void MouseDragEvent()
@@ -225,6 +227,8 @@ public class CardManager : MonoBehaviour
 
         Debug.Log("Get used card");
         }
+
+        SoundManager.Instance.Pop("MP__ (1)");
     }
 
     public bool EmptyCard()
@@ -242,5 +246,6 @@ public class CardManager : MonoBehaviour
     {
         card.OpenCard();
         aiSettingCard[UnityEngine.Random.Range(0, 3)].OpenCard();
+        SoundManager.Instance.Pop("MP__ (1)");
     }
 }

@@ -12,11 +12,13 @@ public class OnButtonClick : MonoBehaviour
         Click = true;
         PlayerPrefs.SetString("PlayerChoose", "GO");
         for (int i = 0; i < buttons.Count; i++) { buttons[i].SetActive(false); }
+        SoundManager.Instance.Pop("MP_Tick");
     }
     public void DieClick()
     {
         Click = true;
         PlayerPrefs.SetString("PlayerChoose", "DIE");
         for (int i = 0; i < buttons.Count; i++) { buttons[i].SetActive(false); }
+        SoundManager.Instance.Pop("MP_Tick");
     }
 }
