@@ -7,15 +7,21 @@ public class SettingSoundManager : MonoBehaviour
 {
     [SerializeField] Slider BGMSlider;
     //[SerializeField] AudioSource BGM;
+    private AudioSource BGMSource;
 
     //[SerializeField] Slider effectSlider;
     //[SerializeField] AudioSource effectSound;
 
-   //슬라이더와 사운드 가져오기.
+    //슬라이더와 사운드 가져오기.
+
+    private void Start()
+    {
+        BGMSource = GetComponent<AudioSource>();
+    }
 
     public void BGMVolume(float volume)     //슬라이더 value값을 받아와 사운드에 넣어주기.
     {
-        //BGM.volume = volume;
+        BGMSource.volume = volume;
         //SoundDataManager.instance.sound.backGroundSound = BGM.volume;
         //SoundDataManager.instance.SaveData();
     }

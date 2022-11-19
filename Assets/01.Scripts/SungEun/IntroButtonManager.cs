@@ -21,5 +21,8 @@ public class IntroButtonManager : MonoBehaviour
     }
     #endregion
 
-
+    public void PlaySound()
+    {
+        SoundManager.Instance.Pop("MP_Tick");
+    }
 }
