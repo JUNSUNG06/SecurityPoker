@@ -104,9 +104,9 @@ public class StateChoose : State<GameController>
 
     public override void OnTextMove()
     {
-        StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(1, 0)), 1.5f).SetEase(Ease.OutExpo).OnComplete(() =>
+        StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(1, 0)), 1f).SetEase(Ease.OutQuint).OnComplete(() =>
         {
-            StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1.5f).SetEase(Ease.InExpo).OnComplete(() =>
+            StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1f).SetEase(Ease.InQuint).OnComplete(() =>
             {
                 TextMove = true;
                 stateMachineClass.canChoose = true;           

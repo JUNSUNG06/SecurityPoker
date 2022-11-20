@@ -90,7 +90,7 @@ public class Card : MonoBehaviour
     {
         GameObject cloneCardObj = Instantiate(_cardPrefab, _cardPrefab.transform.position, Quaternion.identity);
         Card cloneCard = cloneCardObj.GetComponent<Card>();
-        cloneCard.transform.DOMove(_areaPos, 0.5f).SetEase(Ease.InSine);
+        cloneCard.transform.DOMove(_areaPos, 0.4f).SetEase(Ease.InSine);
         cloneCard.Number = this.number;
         cloneCard.Amount = 0;
         //cloneCard.numberText.text = cloneCard.Number.ToString();
