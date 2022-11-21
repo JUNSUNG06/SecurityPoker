@@ -4,7 +4,7 @@ using UnityEngine;
 using TMPro;
 using DG.Tweening;
 
-public class Card : MonoBehaviour
+public class Card : MonoBehaviour, IDrag
 {
     [SerializeField] private int number;
     [SerializeField] public int amount;
@@ -162,13 +162,7 @@ public class Card : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && GameController.Instance.canDarg)
-        {
-            if(amount > 0)
-            {
-                CardManager.Instance.MouseDragEvent();
-            }          
-        }
+        Drag();
     }
 
     private void OnMouseUp()
@@ -192,6 +186,17 @@ public class Card : MonoBehaviour
         {
             HideCard();
             numberText.color = new Color(0, 0, 0, 255);
+        }
+    }
+
+    public void Drag()
+    {
+        if (isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && GameController.Instance.canDarg && !isSetting)
+        {
+            if (amount > 0)
+            {
+                CardManager.Instance.MouseDragEvent();
+            }
         }
     }
 }

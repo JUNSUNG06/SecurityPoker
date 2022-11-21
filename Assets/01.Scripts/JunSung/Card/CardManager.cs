@@ -7,6 +7,7 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using TMPro.EditorUtilities;
 using Newtonsoft.Json.Linq;
+using System;
 
 public class CardManager : MonoBehaviour
 {
@@ -177,7 +178,15 @@ public class CardManager : MonoBehaviour
 
     public void MouseDragEvent()
     {
-        selectedCard.position = Util.mousePosition;
+        try
+        {
+            selectedCard.position = Util.mousePosition;
+        }
+        catch(NullReferenceException)
+        {
+            Debug.Log("선택된 카드 없음");
+        }
+        
     }
 
     public void MouseUpEvent()
