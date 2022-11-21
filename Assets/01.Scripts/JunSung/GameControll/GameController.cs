@@ -16,7 +16,7 @@ public class GameController : MonoBehaviour
 
     public bool canDarg = false;
     public bool canChoose = false;
-    public bool isChoose { get; set; }
+    public bool isChoose = false;
 
     private void Awake()
     {
