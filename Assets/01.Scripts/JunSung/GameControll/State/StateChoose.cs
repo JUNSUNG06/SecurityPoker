@@ -38,10 +38,6 @@ public class StateChoose : State<GameController>
 
         StateText.text = "Choose";
         OnTextMove();//택스트......
-
-
-        //ai선택
-        CardManager.Instance.AiChoose();
     }
 
     public override void OnUpdate(float deltaTime)
@@ -52,18 +48,7 @@ public class StateChoose : State<GameController>
             PlayerChoose = true;
         }
 
-        if(true /* AI가 GO를 선택하는 조건/알고리즘*/ && AIChoose == false)
-        {
-            PlayerPrefs.SetString("AIChoose", "GO");
-            AIChoose = true;
-        }
-        else if(true /* AI가 DIE를 선택하는 조건/알고리즘*/ && AIChoose == false)
-        {
-            PlayerPrefs.SetString("AIChoose", "DIE");
-            AIChoose = true;
-        }
-
-        if(PlayerChoose == true && AIChoose == true && TextMove == true)
+        if (PlayerChoose == true && TextMove == true)
         {
             stateMachine.ChangeState<StateCalculate>();
         }
@@ -81,7 +66,7 @@ public class StateChoose : State<GameController>
     {
         Debug.Log("State Choose End");
         //버튼 비활성화 등 결과준비 + 카드 걍 로테이션으로 뒤집기......
-        CardManager.Instance.AiChoose();
+        //CardManager.Instance.AiChoose();
 
         if(PlayerPrefs.GetString("PlayerChoose") == "GO")
         {
