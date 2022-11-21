@@ -192,7 +192,7 @@ public class CardManager : MonoBehaviour
 
     private int PlayerFactor()
     {
-        int setRetun = playerOpenCard.Number switch
+        int setRetun = playerOpenCard.Number switch//ÈÖ¼º
         {
             1 => 0,
             2 => 0,
