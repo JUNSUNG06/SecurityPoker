@@ -27,8 +27,8 @@ public class ScoreManager : MonoBehaviour
 
     public void AddGameScore(int playerScore, int aiScore)
     {
-        playerGameScore += playerScore;
-        aiGameScore += aiScore;
+        Mathf.Clamp(playerGameScore += playerScore, 0, 99);
+        Mathf.Clamp(aiGameScore += aiScore, 0, 99);
 
         playerScoreText.text = playerGameScore.ToString();
         aiScoreText.text = aiGameScore.ToString();
