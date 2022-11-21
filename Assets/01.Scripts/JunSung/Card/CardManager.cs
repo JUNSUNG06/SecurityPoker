@@ -148,7 +148,7 @@ public class CardManager : MonoBehaviour
         int startGetUesdCard = 0;
         for(int i = 2; i >= 0; i--)
         {
-            playerSettingCard[i].transform.DOMove(playerUsedCardArea.position, 0.5f).SetEase(Ease.InSine);
+            playerSettingCard[i].transform.DOMove(playerUsedCardArea.position, 0.4f).SetEase(Ease.InSine);
             playerUsedCard.Add(playerSettingCard[i]);
             playerSettingCard[i].HideCard();
             playerSettingCard[i].isSetting = false;
@@ -158,7 +158,7 @@ public class CardManager : MonoBehaviour
 
         for (int i = 2; i >= 0; i--)
         {
-            aiSettingCard[i].transform.DOMove(aiUsedCardArea.position, 0.5f).SetEase(Ease.InSine)
+            aiSettingCard[i].transform.DOMove(aiUsedCardArea.position, 0.4f).SetEase(Ease.InSine)
             .OnComplete(() => { ++startGetUesdCard; if (startGetUesdCard >= 3) { GetUesdCard(); } });
             aiUsedCard.Add(aiSettingCard[i]);
             aiSettingCard[i].HideCard();
@@ -213,7 +213,7 @@ public class CardManager : MonoBehaviour
                 Debug.Log(i + 1);
                 playerCards[i].SetAmount(playerCards[i].Amount + 1, true);
                 playerUsedCard.RemoveAt(playerCardIndex);
-                playerCard.transform.DOMove(playerCards[playerCard.amount].transform.position, 0.5f).SetEase(Ease.InSine)
+                playerCard.transform.DOMove(playerCards[playerCard.amount].transform.position, 0.4f).SetEase(Ease.InSine)
                 .OnComplete(() => { Destroy(playerCard.gameObject); });
             }
 
@@ -221,7 +221,7 @@ public class CardManager : MonoBehaviour
             {
                 aiCards[i].SetAmount(aiCards[i].Amount + 1, false);
                 aiUsedCard.RemoveAt(aiCardIndex);
-                aiCard.transform.DOMove(aiCards[aiCard.amount].transform.position, 0.5f).SetEase(Ease.InSine)
+                aiCard.transform.DOMove(aiCards[aiCard.amount].transform.position, 0.4f).SetEase(Ease.InSine)
                 .OnComplete(() => { Destroy(aiCard.gameObject); });
             }
 
