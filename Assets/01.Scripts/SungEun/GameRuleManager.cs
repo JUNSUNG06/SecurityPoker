@@ -8,39 +8,33 @@ public class GameRuleManager : MonoBehaviour
     [SerializeField] GameObject rightArrow;
     [SerializeField] GameObject leftArrow;
 
+    [SerializeField] GameObject[] pagePoint;
+    [SerializeField] GameObject pagePointPosition;
+
     int nowPage = 0;
 
     private void Update()
     {
         if (nowPage == 0)
         {
-            rightArrow.SetActive(false);
+            leftArrow.SetActive(false);
         }
+        else
+        {
+            leftArrow.SetActive(true);
+        }
+
         if (nowPage == gameRulePage.Length - 1)
         {
-            leftArrow.SetActive(false);
+            rightArrow.SetActive(false);
+        }
+        else
+        {
+            rightArrow.SetActive(true);
         }
     }
 
     public void RightPage()
-    {
-        if (nowPage > 0)
-        {
-            nowPage--;
-        }
-
-        gameRulePage[nowPage].SetActive(true);
-
-        for (int i = 0; i < gameRulePage.Length; i++)
-        {
-            if (gameRulePage[i] != gameRulePage[nowPage])
-            {
-                gameRulePage[i].SetActive(false);
-            }
-        }
-    }
-
-    public void LeftPage()
     {
         if (nowPage < gameRulePage.Length - 1)
         {
@@ -56,5 +50,27 @@ public class GameRuleManager : MonoBehaviour
                 gameRulePage[i].SetActive(false);
             }
         }
+
+        pagePointPosition.transform.position = pagePoint[nowPage].transform.position;
+    }
+
+    public void LeftPage()
+    {
+        if (nowPage > 0)
+        {
+            nowPage--;
+        }
+
+        gameRulePage[nowPage].SetActive(true);
+
+        for (int i = 0; i < gameRulePage.Length; i++)
+        {
+            if (gameRulePage[i] != gameRulePage[nowPage])
+            {
+                gameRulePage[i].SetActive(false);
+            }
+        }
+
+        pagePointPosition.transform.position = pagePoint[nowPage].transform.position;
     }
 }
