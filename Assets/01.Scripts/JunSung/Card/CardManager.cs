@@ -88,7 +88,7 @@ public class CardManager : MonoBehaviour
                 maxLength++;
             }
         }
-        int RandomCard = Random.Range(0, maxLength - 1);
+        int RandomCard = UnityEngine.Random.Range(0, maxLength - 1);
         Debug.Log(cards[RandomCard]);
         cardPrefab.transform.position = playerCards[cards[RandomCard]].transform.position;
         selectedCard = playerCards[cards[RandomCard]].transform;
@@ -124,7 +124,7 @@ public class CardManager : MonoBehaviour
 
     public void AiSetCard()
     {
-        int value = Random.Range(0, aiCards.Count);
+        int value = UnityEngine.Random.Range(0, aiCards.Count);
 
         if(aiCards[value].Amount == 0)
         {
@@ -139,7 +139,7 @@ public class CardManager : MonoBehaviour
 
     public void AiChoose()
     {
-        int value = Random.Range(0, 3);
+        int value = UnityEngine.Random.Range(0, 3);
 
         aiIsGo = value > 0 ? true : false;
     }
