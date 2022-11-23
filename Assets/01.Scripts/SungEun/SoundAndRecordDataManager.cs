@@ -46,17 +46,17 @@ public class SoundAndRecordDataManager : MonoBehaviour
         //Debug.Log(path);
         if (File.Exists(path + "Sound"))  //만약 사운드 데이터 경로에 있다면 불러와줌.
         {
-            Debug.Log("Sound 파일이 존재해서 불러왔어욥!");
+            //Debug.Log("Sound 파일이 존재해서 불러왔어욥!");
             LoadData("Sound");
         }
         if (File.Exists(path + "Record"))
         {
-            Debug.Log("Record 파일이 존재해서 불러왔어욥!");
+            //Debug.Log("Record 파일이 존재해서 불러왔어욥!");
             LoadData("Record");
 
             for (int i = 0; i < recordData.recordList.Count; i++)
             {
-                Debug.Log("리코드 불러오깅~");
+                //Debug.Log("리코드 불러오깅~");
                 Debug.Log($"{recordData.recordList[i].playerScore}, {recordData.recordList[i].aiScore}, {recordData.recordList[i].isWin}");
 
                 Debug.Log(RecordManager.instance);
@@ -84,25 +84,25 @@ public class SoundAndRecordDataManager : MonoBehaviour
     {
         if (whatSave == "Sound")    //사운드 데이터를 저장 함.
         {
-            Debug.Log("사운드를 저장합니다.");
+            //Debug.Log("사운드를 저장합니다.");
             string data = JsonUtility.ToJson(sound);    //제이슨 데이터로 만들어줌.
             File.WriteAllText(path + "Sound", data);      //파일에 string으로 써 데이터를 저장함.
 
             if (File.Exists(path + "Sound"))
             {
-                Debug.Log("Sound 파일이 존재합니담!");
+                //Debug.Log("Sound 파일이 존재합니담!");
             }
         }
 
         if (whatSave == "Record")
         {
-            Debug.Log("전적을 저장합니다.");
+            //Debug.Log("전적을 저장합니다.");
             string data = JsonUtility.ToJson(recordData);
             File.WriteAllText(path + "Record", data);
 
             if (File.Exists(path + "Record"))
             {
-                Debug.Log("Record 파일이 존재합니다!");
+                //Debug.Log("Record 파일이 존재합니다!");
             }
         }
     }

@@ -61,16 +61,16 @@ public class RecordManager : MonoBehaviour
             ScrollView = GameObject.Find("RecordCanvas/RecordWindow/Scroll View/Viewport/Content");
             record.RecordExit();
             record.RealExit();
-            Debug.Log("넣어짐...?");
+            //Debug.Log("넣어짐...?");
         }
     }
 
     public void CreateRecord(int _playerScore, int _aiScore, int _isWin, bool _isNewCreat)
     {
-        Debug.Log("생성되었습니다.");
+        //Debug.Log("생성되었습니다.");
         if (_isNewCreat)
         {
-            Debug.Log("새로 생성되었습니다.");
+            //Debug.Log("새로 생성되었습니다.");
             Records record = new Records(_playerScore, _aiScore, _isWin);
             SoundAndRecordDataManager.instance.recordData.recordList.Add(record);
             SoundAndRecordDataManager.instance.SaveData("Record");
