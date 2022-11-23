@@ -7,7 +7,6 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using TMPro.EditorUtilities;
 using Newtonsoft.Json.Linq;
-using System;
 
 public class CardManager : MonoBehaviour
 {
@@ -37,6 +36,9 @@ public class CardManager : MonoBehaviour
     [Header("[사용한 카드 카드]")]
     [SerializeField] public List<Card> playerUsedCard = new List<Card>();
     [SerializeField] public List<Card> aiUsedCard = new List<Card>();
+
+    [Header("[플레이어가 공개한 카드]")]
+    [SerializeField] public Card playerOpenCard;
 
     [Header("[카드 프리펩]")]
     [SerializeField] private GameObject cardPrefab;
@@ -88,7 +90,7 @@ public class CardManager : MonoBehaviour
                 maxLength++;
             }
         }
-        int RandomCard = UnityEngine.Random.Range(0, maxLength - 1);
+        int RandomCard = Random.Range(0, maxLength - 1);
         Debug.Log(cards[RandomCard]);
         cardPrefab.transform.position = playerCards[cards[RandomCard]].transform.position;
         selectedCard = playerCards[cards[RandomCard]].transform;
@@ -96,7 +98,6 @@ public class CardManager : MonoBehaviour
         selectedCard.position = selectedCard.GetComponent<Card>().originPos;
         selectedCard = null;
         dragCount++;
-        SoundManager.Instance.Pop("MP__ (1)");
     }
 
     public void LowCard(int _number)
@@ -124,7 +125,7 @@ public class CardManager : MonoBehaviour
 
     public void AiSetCard()
     {
-        int value = UnityEngine.Random.Range(0, aiCards.Count);
+        int value = Random.Range(0, aiCards.Count);
 
         if(aiCards[value].Amount == 0)
         {
@@ -139,9 +140,29 @@ public class CardManager : MonoBehaviour
 
     public void AiChoose()
     {
-        int value = UnityEngine.Random.Range(0, 3);
+        int playerSide = PlayerFactor();
+        int aiSide = AiFactor();
 
-        aiIsGo = value > 0 ? true : false;
+        if (playerSide < aiSide) //플레이어가 나보다 낮은 등급의 숫자일 때
+        {
+            PlayerPrefs.SetString("AIChoose", "GO");
+            aiIsGo = true;
+        }
+        else if (playerSide == aiSide) //플레이어랑 나랑 같은 등급의 숫자일 때
+        {
+            string a = Random.Range(0, 2) == 0 ? "GO" : "DIE";
+            PlayerPrefs.SetString("AIChoose", a);
+            aiIsGo = a switch
+            {
+                "GO" => true,
+                "DIE" => false,
+            };
+        }
+        else //플레이어가 나보다 높은 등급의 숫자일 때
+        {
+            PlayerPrefs.SetString("AIChoose", "DIE");
+            aiIsGo = false;
+        }
     }
 
     public void ClearUsedCard()
@@ -169,24 +190,36 @@ public class CardManager : MonoBehaviour
         aiSettingCard.Clear();
     }
 
+    private int PlayerFactor()
+    {
+        int setRetun = playerOpenCard.Number switch//휘성
+        {
+            1 => 0,
+            2 => 0,
+            3 => 1,
+            4 => 2,
+            5 => 2,
+        };
+        return setRetun;
+    }
+
+    private int AiFactor()
+    {
+        int rank = aiSettingCard[0].Number + aiSettingCard[1].Number + aiSettingCard[2].Number;
+        if(rank >= 3 && rank <= 6) { return 0; }
+        else if(rank >= 7 && rank <= 10) { return 1; }
+        else { return 2; }
+    }
+
     public void MouseDownEvent(Transform _card)
     {
         isDragging = true;
         selectedCard = _card;
-        SoundManager.Instance.Pop("MP__ (1)");
     }
 
     public void MouseDragEvent()
     {
-        try
-        {
-            selectedCard.position = Util.mousePosition;
-        }
-        catch(NullReferenceException)
-        {
-            Debug.Log("선택된 카드 없음");
-        }
-        
+        selectedCard.position = Util.mousePosition;
     }
 
     public void MouseUpEvent()
@@ -236,8 +269,6 @@ public class CardManager : MonoBehaviour
 
         Debug.Log("Get used card");
         }
-
-        SoundManager.Instance.Pop("MP__ (1)");
     }
 
     public bool EmptyCard()
@@ -253,8 +284,9 @@ public class CardManager : MonoBehaviour
 
     public void ChooseCard(Card card)
     {
+        playerOpenCard = card;
         card.OpenCard();
         aiSettingCard[UnityEngine.Random.Range(0, 3)].OpenCard();
-        SoundManager.Instance.Pop("MP__ (1)");
+        AiChoose();
     }
 }
