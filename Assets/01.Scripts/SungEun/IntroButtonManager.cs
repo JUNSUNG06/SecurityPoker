@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class IntroButtonManager : MonoBehaviour
 {
+    [SerializeField] Button[] panelButton;
+
     #region play and exit
     public void SceneChange(string sceneName)   //씬 이름을 매개 변수 받아와 그 씬 번경
     {
@@ -24,5 +27,21 @@ public class IntroButtonManager : MonoBehaviour
     public void PlaySound()
     {
         SoundManager.Instance.Pop("MP_Tick");
+    }
+
+    public void PanelButtonTrue(int panel)      //이거ㅓ어ㅓ어어고치기ㅣㅣㅣ
+    {
+        panelButton[panel].interactable = true;
+    }
+    
+    public void PanelButtonfalse(int panel)
+    {
+        StartCoroutine(False(panel));
+    }
+
+    IEnumerator False(int panel)
+    {
+        yield return new WaitForSeconds(0.01f);
+        panelButton[panel].interactable = false;        //interactable은 버튼의 활성화, 비활성화를 enabled는 컴포넌트의 활성화, 비활성화를.
     }
 }

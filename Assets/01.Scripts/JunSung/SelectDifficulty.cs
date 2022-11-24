@@ -10,4 +10,9 @@ public class SelectDifficulty : MonoBehaviour
     {
         selectCanvas.SetActive(true);
     }
+
+    public void SetDifficulty(string difficulty)
+    {
+        PlayerPrefs.SetString("Difficulty", difficulty);
+    }
 }

@@ -79,10 +79,12 @@ public class CardManager : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void Start()
     {
-        
+        level = PlayerPrefs.GetString("Difficulty");
+        Debug.Log(level);
     }
+
     public void LastSetUp()
     {
         int[] cards = new int[100];
