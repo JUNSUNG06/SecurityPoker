@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
+using System.Collections;
 
 public class GameController : MonoBehaviour
 {
@@ -45,5 +47,17 @@ public class GameController : MonoBehaviour
     public void EndGame()
     {
         GameObject.Find("Canvas/GameOver").GetComponent<EndGame>().ShowEndPanel();
+    }
+
+    public void Coroutine(Action action)
+    {
+        StartCoroutine(_Coroutine(action));
+    }
+
+    IEnumerator _Coroutine(Action _action)
+    {
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+
+        _action?.Invoke();
     }
 }

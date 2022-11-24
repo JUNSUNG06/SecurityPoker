@@ -7,6 +7,7 @@ using DG.Tweening;
 using Unity.VisualScripting;
 using TMPro.EditorUtilities;
 using Newtonsoft.Json.Linq;
+using TMPro;
 
 public class CardManager : MonoBehaviour
 {
@@ -63,6 +64,9 @@ public class CardManager : MonoBehaviour
     public int dragCount;
     public bool aiIsGo;// true¸é ai°¡ go, false¸é die
     string level;
+
+    public TextMeshProUGUI aiChooseText;
+    public TextMeshProUGUI playerChooseText;    
 
     private void Awake()
     {
@@ -176,6 +180,14 @@ public class CardManager : MonoBehaviour
             {
                 PlayerPrefs.SetString("AIChoose", Random.Range(0, 6) == 0 ? "GO" : "DIE");
                 aiIsGo = false;
+            }
+        }
+
+        if(aiIsGo)
+        {
+            for(int i = 0; i < 3; i++)
+            {
+                aiSettingCard[i].OpenCard();
             }
         }
     }
@@ -354,5 +366,17 @@ public class CardManager : MonoBehaviour
         }
         AiChoose();
         SoundManager.Instance.Pop("MP__ (1)");
+    }
+
+    public void ClearChooseText()
+    {
+        aiChooseText.text = "";
+        playerChooseText.text = "";
+    }
+
+    public void SetChooseText()
+    {
+        aiChooseText.text = aiIsGo ? "GO" : "DIE";
+        playerChooseText.text = PlayerPrefs.GetString("PlayerChoose") == "GO" ? "GO" : "DIE";
     }
 }

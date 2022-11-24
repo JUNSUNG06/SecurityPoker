@@ -13,6 +13,7 @@ public class OnButtonClick : MonoBehaviour
         PlayerPrefs.SetString("PlayerChoose", "GO");
         for (int i = 0; i < buttons.Count; i++) { buttons[i].SetActive(false); }
         SoundManager.Instance.Pop("MP_Tick");
+        CardManager.Instance.SetChooseText();
     }
     public void DieClick()
     {
@@ -20,5 +21,6 @@ public class OnButtonClick : MonoBehaviour
         PlayerPrefs.SetString("PlayerChoose", "DIE");
         for (int i = 0; i < buttons.Count; i++) { buttons[i].SetActive(false); }
         SoundManager.Instance.Pop("MP_Tick");
+        CardManager.Instance.SetChooseText();
     }
 }

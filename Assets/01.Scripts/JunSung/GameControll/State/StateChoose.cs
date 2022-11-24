@@ -50,7 +50,11 @@ public class StateChoose : State<GameController>
 
         if (PlayerChoose == true && TextMove == true)
         {
-            stateMachine.ChangeState<StateCalculate>();
+            stateMachineClass.Coroutine(() => 
+            {
+                CardManager.Instance.ClearChooseText();
+                stateMachine.ChangeState<StateCalculate>();
+            });
         }
 
         if(stateMachineClass.isChoose)
@@ -97,5 +101,12 @@ public class StateChoose : State<GameController>
                 stateMachineClass.canChoose = true;           
             });
         });
+    }
+
+    IEnumerator ChangeStateCalc()
+    {
+        yield return new WaitForSeconds(2f);
+
+
     }
 }
