@@ -63,7 +63,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private LayerMask cardAreaLayer;
     public int dragCount;
     public bool aiIsGo;// true¸é ai°¡ go, false¸é die
-    string level;
+    public string level;
 
     public TextMeshProUGUI aiChooseText;
     public TextMeshProUGUI playerChooseText;    
