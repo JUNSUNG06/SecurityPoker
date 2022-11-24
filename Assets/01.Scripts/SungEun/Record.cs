@@ -24,21 +24,21 @@ public class Record : MonoBehaviour
     public void RecordCheck()
     {
         GetComponent<Setting>().enabled = false;
-        recordCanvas.SetActive(true);      //셋팅 캔버스 활성화
-        recordWindow.transform.DOScale(new Vector3(1, 1, 1), .5f).SetEase(Ease.OutBack);   //셋팅창 나타나기
+        recordCanvas.SetActive(true);      //리코드 캔버스 활성화
+        recordWindow.transform.DOScale(new Vector3(1, 1, 1), .5f).SetEase(Ease.OutBack);   //리코드창 나타나기
         //ScrollViewHandle.GetComponent<RectTransform>().anchorMax = new Vector2(1, 1);
 
     }
 
     public void RecordExit()
     {
-        recordWindow.transform.DOScale(new Vector3(0, 0, 0), .5f).SetEase(Ease.InBack);    //셋팅창 사라지기
-        Invoke("RealExit", .5f);    //셋팅 캔버스의 사라지는 시간은 0.5초 이후에 셋팅창이 사라지는 시간이 0.5초라서
+        recordWindow.transform.DOScale(new Vector3(0, 0, 0), .5f).SetEase(Ease.InBack);    //리코드 사라지기
+        Invoke("RealExit", .5f);    //리코드 캔버스의 사라지는 시간은 0.5초 이후에 셋팅창이 사라지는 시간이 0.5초라서
     }
 
     public void RealExit()
     {
-        recordCanvas.SetActive(false);     //셋팅 캔버스 비활성화
+        recordCanvas.SetActive(false);     //리코드 캔버스 비활성화
         GetComponent<Setting>().enabled = true;
     }
 }
