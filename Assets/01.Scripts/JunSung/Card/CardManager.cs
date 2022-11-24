@@ -62,6 +62,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private LayerMask cardAreaLayer;
     public int dragCount;
     public bool aiIsGo;// true면 ai가 go, false면 die
+    string level;
 
     private void Awake()
     {
@@ -127,28 +128,20 @@ public class CardManager : MonoBehaviour
     {
         int value = Random.Range(0, aiCards.Count);
 
-        if(aiCards[value].Amount == 0)
+        if (aiCards[value].Amount == 0)
         {
             AiSetCard();
             return;
         }
         cardPrefab.transform.position = aiCards[3].transform.position;
-        aiCards[value].Setting(cardPrefab, aiCardSettingArea.position - new Vector3((aiSettingCard.Count) * 1.75f, 0 ,0), false);
+        aiCards[value].Setting(cardPrefab, aiCardSettingArea.position - new Vector3((aiSettingCard.Count) * 1.75f, 0, 0), false);
 
         Debug.Log("ai card set");
     }
 
     public void AiChoose()
     {
-        int playerSide = PlayerFactor();
-        int aiSide = AiFactor();
-
-        if (playerSide < aiSide) //플레이어가 나보다 낮은 등급의 숫자일 때
-        {
-            PlayerPrefs.SetString("AIChoose", "GO");
-            aiIsGo = true;
-        }
-        else if (playerSide == aiSide) //플레이어랑 나랑 같은 등급의 숫자일 때
+        if(level == "easy")
         {
             string a = Random.Range(0, 2) == 0 ? "GO" : "DIE";
             PlayerPrefs.SetString("AIChoose", a);
@@ -158,10 +151,31 @@ public class CardManager : MonoBehaviour
                 "DIE" => false,
             };
         }
-        else //플레이어가 나보다 높은 등급의 숫자일 때
+        else
         {
-            PlayerPrefs.SetString("AIChoose", "DIE");
-            aiIsGo = false;
+            int playerSide = PlayerFactor();
+            int aiSide = AiFactor();
+
+            if (playerSide < aiSide) //플레이어가 나보다 낮은 등급의 숫자일 때
+            {
+                PlayerPrefs.SetString("AIChoose", Random.Range(0, 6) == 0 ? "DIE" : "GO");
+                aiIsGo = true;
+            }
+            else if (playerSide == aiSide) //플레이어랑 나랑 같은 등급의 숫자일 때
+            {
+                string a = Random.Range(0, 2) == 0 ? "GO" : "DIE";
+                PlayerPrefs.SetString("AIChoose", a);
+                aiIsGo = a switch
+                {
+                    "GO" => true,
+                    "DIE" => false,
+                };
+            }
+            else //플레이어가 나보다 높은 등급의 숫자일 때
+            {
+                PlayerPrefs.SetString("AIChoose", Random.Range(0, 6) == 0 ? "GO" : "DIE");
+                aiIsGo = false;
+            }
         }
     }
 
@@ -286,7 +300,54 @@ public class CardManager : MonoBehaviour
     {
         playerOpenCard = card;
         card.OpenCard();
-        aiSettingCard[UnityEngine.Random.Range(0, 3)].OpenCard();
+        if(level == "hard")
+        {
+            int playerSide = PlayerFactor();
+            int aiSide = AiFactor();
+
+            if (playerSide < aiSide) //플레이어가 나보다 낮은 등급의 숫자일 때
+            {
+                Card temp;
+                for (int i = 0; i < aiSettingCard.Count; i++)
+                {
+                    for (int j = 0; j < aiSettingCard.Count - (i + 1); j++)
+                    {
+                        if (aiSettingCard[j].Number > aiSettingCard[j + 1].Number)
+                        {
+                            temp = aiSettingCard[j];
+                            aiSettingCard[j] = aiSettingCard[j + 1];
+                            aiSettingCard[j + 1] = temp;
+                        }
+                    }
+                }
+                aiSettingCard[0].OpenCard();
+            }
+            else if (playerSide == aiSide) //플레이어랑 나랑 같은 등급의 숫자일 때
+            {
+                aiSettingCard[UnityEngine.Random.Range(0, 3)].OpenCard();
+            }
+            else //플레이어가 나보다 높은 등급의 숫자일 때
+            {
+                Card temp;
+                for(int i = 0; i < aiSettingCard.Count; i++)
+                {
+                    for(int j = 0; j < aiSettingCard.Count - (i + 1); j++)
+                    {
+                        if (aiSettingCard[j].Number < aiSettingCard[j + 1].Number)
+                        {
+                            temp = aiSettingCard[j];
+                            aiSettingCard[j] = aiSettingCard[j + 1];
+                            aiSettingCard[j + 1] = temp;
+                        }
+                    }
+                }
+                aiSettingCard[0].OpenCard();
+            }
+        }
+        else
+        {
+            aiSettingCard[UnityEngine.Random.Range(0, 3)].OpenCard();
+        }
         AiChoose();
     }
 }
