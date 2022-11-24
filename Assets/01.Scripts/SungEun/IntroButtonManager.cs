@@ -31,11 +31,17 @@ public class IntroButtonManager : MonoBehaviour
 
     public void PanelButtonTrue(int panel)      //이거ㅓ어ㅓ어어고치기ㅣㅣㅣ
     {
-        panelButton[panel].enabled = true;
+        panelButton[panel].interactable = true;
     }
     
     public void PanelButtonfalse(int panel)
     {
-        panelButton[panel].enabled = false;
+        StartCoroutine(False(panel));
+    }
+
+    IEnumerator False(int panel)
+    {
+        yield return new WaitForSeconds(0.01f);
+        panelButton[panel].interactable = false;        //interactable은 버튼의 활성화, 비활성화를 enabled는 컴포넌트의 활성화, 비활성화를.
     }
 }
