@@ -18,6 +18,7 @@ public class SettingSoundManager : MonoBehaviour
     {
         BGMSource = GetComponent<AudioSource>();
         BGMSource.volume = SoundAndRecordDataManager.instance.sound.backGroundSound;
+        BGMSlider.value = SoundAndRecordDataManager.instance.sound.backGroundSound;
     }
 
     public void BGMVolume(float volume)     //슬라이더 value값을 받아와 사운드에 넣어주기.

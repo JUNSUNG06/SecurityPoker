@@ -73,4 +73,21 @@ public class GameRuleManager : MonoBehaviour
 
         pagePointPosition.transform.position = pagePoint[nowPage].transform.position;
     }
+
+    public void PointClick(int point)
+    {
+        nowPage = point;
+
+        gameRulePage[point].SetActive(true);
+
+        for (int i = 0; i < gameRulePage.Length; i++)
+        {
+            if (gameRulePage[i] != gameRulePage[point])
+            {
+                gameRulePage[i].SetActive(false);
+            }
+        }
+
+        pagePointPosition.transform.position = pagePoint[point].transform.position;
+    }
 }
