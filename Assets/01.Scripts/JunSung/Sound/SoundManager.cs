@@ -10,6 +10,8 @@ public class SoundManager : MonoBehaviour
 
     private Dictionary<string, SoundPool> poolDictionary = new Dictionary<string, SoundPool>();
 
+    private float volume = 0;
+
     private void Awake()
     {
         if (Instance == null)
@@ -45,8 +47,14 @@ public class SoundManager : MonoBehaviour
         if (poolDictionary.TryGetValue(name, out SoundPool pool))
         {
             _source = pool.Pop();
+            _source.volume = volume;
         }
 
         return _source;
+    }
+
+    public void SetVolume(float value)
+    {
+        volume = value;
     }
 }
