@@ -28,6 +28,7 @@ public class StateCalculate : State<GameController>
 
     public override void OnStart()
     {
+        Debug.Log("callculate");
         Debug.Log("State Caculate Start");
 
         StateText.text = "Turn End";
@@ -59,7 +60,8 @@ public class StateCalculate : State<GameController>
         }
         else
         {
-            stateMachine.ChangeState<StateSetting>();
+            Debug.Log("chaange");
+            OnTextMove();//≈√Ω∫∆Æ......
         }
     }
 
@@ -154,6 +156,7 @@ public class StateCalculate : State<GameController>
         {
             StateText.transform.DOMove(Camera.main.WorldToScreenPoint(new Vector2(15, 0)), 1f).SetEase(Ease.InQuint).OnComplete(() =>
             {
+                Debug.Log("???");
                 stateMachine.ChangeState<StateSetting>();
             });
         });

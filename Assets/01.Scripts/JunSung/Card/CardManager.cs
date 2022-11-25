@@ -63,7 +63,7 @@ public class CardManager : MonoBehaviour
     [SerializeField] private LayerMask cardAreaLayer;
     public int dragCount;
     public bool aiIsGo;// true¸é ai°¡ go, false¸é die
-    string level;
+    public string level;
 
     public TextMeshProUGUI aiChooseText;
     public TextMeshProUGUI playerChooseText;    
@@ -182,14 +182,6 @@ public class CardManager : MonoBehaviour
             {
                 PlayerPrefs.SetString("AIChoose", Random.Range(0, 6) == 0 ? "GO" : "DIE");
                 aiIsGo = false;
-            }
-        }
-
-        if(aiIsGo)
-        {
-            for(int i = 0; i < 3; i++)
-            {
-                aiSettingCard[i].OpenCard();
             }
         }
     }
