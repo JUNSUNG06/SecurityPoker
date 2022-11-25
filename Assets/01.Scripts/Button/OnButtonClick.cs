@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class OnButtonClick : MonoBehaviour
 {
@@ -22,5 +23,10 @@ public class OnButtonClick : MonoBehaviour
         for (int i = 0; i < buttons.Count; i++) { buttons[i].SetActive(false); }
         SoundManager.Instance.Pop("MP_Tick");
         CardManager.Instance.SetChooseText();
+    }
+
+    public void GointroScene()
+    {
+        SceneManager.LoadScene("Intro");
     }
 }

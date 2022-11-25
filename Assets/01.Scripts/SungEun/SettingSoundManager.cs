@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class SettingSoundManager : MonoBehaviour
 {
@@ -14,13 +15,13 @@ public class SettingSoundManager : MonoBehaviour
 
     //슬라이더와 사운드 가져오기.
 
+    Setting setting;
+
     private void Start()
     {
         BGMSource = GetComponent<AudioSource>();
         BGMSource.volume = SoundAndRecordDataManager.instance.sound.backGroundSound;
         BGMSlider.value = SoundAndRecordDataManager.instance.sound.backGroundSound;
-
-        //미씽뜨는거 수저잊ㄷ루저두러우
     }
 
     public void BGMVolume(float volume)     //슬라이더 value값을 받아와 사운드에 넣어주기.
