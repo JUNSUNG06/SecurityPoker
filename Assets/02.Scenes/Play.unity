@@ -3996,6 +3996,7 @@ MonoBehaviour:
     m_Bits: 256
   dragCount: 0
   aiIsGo: 0
+  level: 
   aiChooseText: {fileID: 1164621908}
   playerChooseText: {fileID: 1373195758}
 --- !u!4 &1897742136

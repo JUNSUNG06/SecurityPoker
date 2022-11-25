@@ -149,7 +149,7 @@ public class Card : MonoBehaviour, IDrag
 
     private void OnMouseDown()
     {
-        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1)
+        if(isPlayerCard && gameController.stateMachine.nowState.GetType() == gameController.stateMachine.stateList[typeof(StateSetting)].GetType() && CardManager.Instance.dragCount <= 1 && !isClone)
         {
             CardManager.Instance.MouseDownEvent(this.transform);
         }
