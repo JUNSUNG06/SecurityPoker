@@ -184,14 +184,6 @@ public class CardManager : MonoBehaviour
                 aiIsGo = false;
             }
         }
-
-        if(aiIsGo)
-        {
-            for(int i = 0; i < 3; i++)
-            {
-                aiSettingCard[i].OpenCard();
-            }
-        }
     }
 
     public void ClearUsedCard()
