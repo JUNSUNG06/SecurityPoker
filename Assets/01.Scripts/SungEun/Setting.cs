@@ -2,11 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Setting : MonoBehaviour
 {
     [SerializeField] GameObject settingCanvas;  //셋팅관련 캔버스
     [SerializeField] GameObject settingWindow;     //셋팅 창
+
+    [SerializeField] Button panel = null;
 
     public void Update()
     {
@@ -19,8 +23,14 @@ public class Setting : MonoBehaviour
             else if (settingCanvas.activeSelf == false)
             {
                 SettingCheck();
+                if (SceneManager.GetActiveScene().name == "Play")
+                {
+                    panel.interactable = true;
+                }
             }
         }
+
+
 
     }
 
@@ -37,6 +47,10 @@ public class Setting : MonoBehaviour
         settingWindow.transform.DOScale(new Vector3(0, 0, 0), .5f).SetEase(Ease.InBack);    //셋팅창 사라지기
         StartCoroutine(wait(2));    //셋팅 캔버스의 사라지는 시간은 0.5초 이후에 셋팅창이 사라지는 시간이 0.5초라서
     }
+    public void RealExit()
+    {
+        settingCanvas.SetActive(false);
+    }
 
     IEnumerator wait(int oneOrTwo)
     {
@@ -44,5 +58,16 @@ public class Setting : MonoBehaviour
 
         if (oneOrTwo == 1) Time.timeScale = 0;  //0.5초 뒤에 시간을 없에야 창이 똑바로 뜸.
         if (oneOrTwo == 2) settingCanvas.SetActive(false);      //셋팅 캔버스의 비활성화는 다 사라진 0.5초 이후에
+    }
+
+    public void PanelButtonfalse()
+    {
+        StartCoroutine(False());
+    }
+
+    IEnumerator False()
+    {
+        yield return new WaitForSeconds(0.01f);
+        panel.interactable = false;
     }
 }
