@@ -72,20 +72,6 @@ public class StateChoose : State<GameController>
         //버튼 비활성화 등 결과준비 + 카드 걍 로테이션으로 뒤집기......
         //CardManager.Instance.AiChoose();
 
-        if (PlayerPrefs.GetString("PlayerChoose") == "GO")
-        {
-            CardManager.Instance.playerSettingCard[0].OpenCard();
-            CardManager.Instance.playerSettingCard[1].OpenCard();
-            CardManager.Instance.playerSettingCard[2].OpenCard();
-        }
-
-        if (CardManager.Instance.aiIsGo)
-        {
-            CardManager.Instance.aiSettingCard[0].OpenCard();
-            CardManager.Instance.aiSettingCard[1].OpenCard();
-            CardManager.Instance.aiSettingCard[2].OpenCard();
-        }
-
         TextMove = false;
         PlayerChoose = false;
         AIChoose = false;

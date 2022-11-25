@@ -373,4 +373,20 @@ public class CardManager : MonoBehaviour
         aiChooseText.text = aiIsGo ? "GO" : "DIE";
         playerChooseText.text = PlayerPrefs.GetString("PlayerChoose") == "GO" ? "GO" : "DIE";
     }
+
+    public void OpenAllCards()
+    {
+        for(int i = 0; i < 3; i++)
+        {
+            if (PlayerPrefs.GetString("PlayerChoose") == "GO")
+            {
+                CardManager.Instance.playerSettingCard[i].OpenCard();
+            }
+
+            if (CardManager.Instance.aiIsGo)
+            {
+                CardManager.Instance.aiSettingCard[i].OpenCard();
+            }
+        }     
+    }
 }
