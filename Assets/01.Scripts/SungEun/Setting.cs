@@ -30,6 +30,8 @@ public class Setting : MonoBehaviour
             }
         }
 
+
+
     }
 
     public void SettingCheck()
