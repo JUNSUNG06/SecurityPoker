@@ -57,9 +57,9 @@ public class SoundAndRecordDataManager : MonoBehaviour
             for (int i = 0; i < recordData.recordList.Count; i++)
             {
                 //Debug.Log("리코드 불러오깅~");
-                Debug.Log($"{recordData.recordList[i].playerScore}, {recordData.recordList[i].aiScore}, {recordData.recordList[i].isWin}");
+                //Debug.Log($"{recordData.recordList[i].playerScore}, {recordData.recordList[i].aiScore}, {recordData.recordList[i].isWin}");
 
-                Debug.Log(RecordManager.instance);
+                //Debug.Log(RecordManager.instance);
 
                 RecordManager.instance.CreateRecord(
                     recordData.recordList[i].playerScore,

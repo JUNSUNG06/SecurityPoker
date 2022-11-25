@@ -14,7 +14,7 @@ public class PoolableSound : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(audios.isPlaying);
+        //Debug.Log(audios.isPlaying);
 
         if(!audios.isPlaying)
         {

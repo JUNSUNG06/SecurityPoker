@@ -44,25 +44,27 @@ public class RecordManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
             Destroy(this.gameObject);
         }
-    }
+            DontDestroyOnLoad(gameObject);
 
-    private void Start()
-    {
         if (SceneManager.GetActiveScene().name == "Intro")
         {
-            record = FindObjectOfType<Record>();
+            record = FindObjectOfType<Record>().GetComponent<Record>();
+            Debug.Log(record);
             record.RecordCheck();
             ScrollView = GameObject.Find("RecordCanvas/RecordWindow/Scroll View/Viewport/Content");
             record.RecordExit();
             record.RealExit();
-            //Debug.Log("³Ö¾îÁü...?");
+            Debug.Log("³Ö¾îÁü...?");
         }
+    }
+
+    private void Start()
+    {
     }
 
     public void CreateRecord(int _playerScore, int _aiScore, int _isWin, bool _isNewCreat)
