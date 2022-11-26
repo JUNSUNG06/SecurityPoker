@@ -29,6 +29,7 @@ public class OnButtonClick : MonoBehaviour
 
     public void GointroScene()
     {
+        Time.timeScale = 1;
         SceneManager.LoadScene("Intro");
     }
 }
